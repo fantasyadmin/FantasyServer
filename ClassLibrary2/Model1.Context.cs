@@ -32,7 +32,6 @@ namespace ClassLibrary2
         public virtual DbSet<Match> Match { get; set; }
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<Smart_calc> Smart_calc { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }
