@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         // GET: api/Register/email,pass
         public string Get(int id)
         {
-            return "Banana";
+            return "Banana2" ;
         }
 
         // POST: api/Register
