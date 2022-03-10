@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bgroup89_test2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Active_in">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="match_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="attending" Type="tinyint" Nullable="false" />
+          <Property Name="pen_missed" Type="int" Nullable="false" />
+          <Property Name="goals_recieved" Type="int" Nullable="false" />
+          <Property Name="apporval_status" Type="tinyint" Nullable="false" />
+          <Property Name="match_color" Type="nchar" MaxLength="10" />
+          <Property Name="assists" Type="int" Nullable="false" />
+          <Property Name="goals_scored" Type="int" Nullable="false" />
+          <Property Name="match_id" Type="int" Nullable="false" />
+          <Property Name="league_id" Type="int" Nullable="false" />
+          <Property Name="wins" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fantasy_team">
+          <Key>
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="team_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="team_budget" Type="int" Nullable="false" />
+          <Property Name="league_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="team_points" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fantasy_team_players">
+          <Key>
+            <PropertyRef Name="nickname" />
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="nickname" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="league_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="League">
+          <Key>
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="league_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="league_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="league_picture" Type="image" />
+          <Property Name="games_played" Type="int" Nullable="false" />
+          <Property Name="league_rules" Type="nvarchar(max)" />
+          <Property Name="invite_url" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Listed_in">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="nickname" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="nickname" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="league_id" Type="int" Nullable="false" />
+          <Property Name="registration_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="match_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="match_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="match_date" Type="date" Nullable="false" />
+          <Property Name="match_time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="location" Type="geography" Nullable="false" />
+          <Property Name="team_color1" Type="nchar" MaxLength="10" />
+          <Property Name="team_color2" Type="nchar" MaxLength="10" />
+          <Property Name="league_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="nickname" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="nickname" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="picture" Type="image" />
+          <Property Name="player_score" Type="int" Nullable="false" />
+          <Property Name="games_played" Type="int" Nullable="false" />
+          <Property Name="total_wins" Type="int" Nullable="false" />
+          <Property Name="total_goals_scored" Type="int" Nullable="false" />
+          <Property Name="total_assists" Type="int" Nullable="false" />
+          <Property Name="total_pen_missed" Type="int" Nullable="false" />
+          <Property Name="total_goals_recieved" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Smart_calc">
+          <Key>
+            <PropertyRef Name="calc_id" />
+          </Key>
+          <Property Name="calc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wins_pts" Type="int" Nullable="false" />
+          <Property Name="goals_pts" Type="int" Nullable="false" />
+          <Property Name="assists_pts" Type="int" Nullable="false" />
+          <Property Name="pen_missed_minus_pts" Type="int" Nullable="false" />
+          <Property Name="goals_recieved_minus_pts" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Active_in_Match1">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="Active_in" Type="Self.Active_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Active_in">
+              <PropertyRef Name="match_id" />
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Active_in_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Active_in" Type="Self.Active_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Active_in">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fantasy_team_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Fantasy_team">
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fantasy_team_players_Fantasy_team">
+          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="1" />
+          <End Role="fantasy_team_players" Type="Self.fantasy_team_players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fantasy_team">
+              <PropertyRef Name="team_id" />
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="fantasy_team_players">
+              <PropertyRef Name="team_id" />
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fantasy_team_players_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="fantasy_team_players" Type="Self.fantasy_team_players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="nickname" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="fantasy_team_players">
+              <PropertyRef Name="nickname" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fantasy_team_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Fantasy_team">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_league_id">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Listed_in_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Listed_in" Type="Self.Listed_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Listed_in">
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Listed_in_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Listed_in" Type="Self.Listed_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="nickname" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Listed_in">
+              <PropertyRef Name="nickname" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bgroup89_test2ModelStoreContainer">
+          <EntitySet Name="Active_in" EntityType="Self.Active_in" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fantasy_team" EntityType="Self.Fantasy_team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fantasy_team_players" EntityType="Self.fantasy_team_players" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Listed_in" EntityType="Self.Listed_in" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Smart_calc" EntityType="Self.Smart_calc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Active_in_Match1" Association="Self.FK_Active_in_Match1">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Active_in" EntitySet="Active_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Active_in_User" Association="Self.FK_Active_in_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Active_in" EntitySet="Active_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fantasy_team_League" Association="Self.FK_Fantasy_team_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fantasy_team_players_Fantasy_team" Association="Self.FK_fantasy_team_players_Fantasy_team">
+            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
+            <End Role="fantasy_team_players" EntitySet="fantasy_team_players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fantasy_team_players_Player" Association="Self.FK_fantasy_team_players_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="fantasy_team_players" EntitySet="fantasy_team_players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fantasy_team_User" Association="Self.FK_Fantasy_team_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_league_id" Association="Self.FK_league_id">
+            <End Role="League" EntitySet="League" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Listed_in_League" Association="Self.FK_Listed_in_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="Listed_in" EntitySet="Listed_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Listed_in_Player" Association="Self.FK_Listed_in_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Listed_in" EntitySet="Listed_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_User" Association="Self.FK_Player_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bgroup89_test2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Active_in">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="match_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="attending" Type="Byte" Nullable="false" />
+          <Property Name="pen_missed" Type="Int32" Nullable="false" />
+          <Property Name="goals_recieved" Type="Int32" Nullable="false" />
+          <Property Name="apporval_status" Type="Byte" Nullable="false" />
+          <Property Name="match_color" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="assists" Type="Int32" Nullable="false" />
+          <Property Name="goals_scored" Type="Int32" Nullable="false" />
+          <Property Name="match_id" Type="Int32" Nullable="false" />
+          <Property Name="league_id" Type="Int32" Nullable="false" />
+          <Property Name="wins" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_Active_in_Match1" FromRole="Active_in" ToRole="Match" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Active_in_User" FromRole="Active_in" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Fantasy_team">
+          <Key>
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="team_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="team_budget" Type="Int32" Nullable="false" />
+          <Property Name="league_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="team_points" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="League" Relationship="Self.FK_Fantasy_team_League" FromRole="Fantasy_team" ToRole="League" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Fantasy_team_User" FromRole="Fantasy_team" ToRole="User" />
+          <NavigationProperty Name="Player" Relationship="Self.fantasy_team_players" FromRole="Fantasy_team" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="League">
+          <Key>
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="league_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="league_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="league_picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="games_played" Type="Int32" Nullable="false" />
+          <Property Name="league_rules" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="invite_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Fantasy_team" Relationship="Self.FK_Fantasy_team_League" FromRole="League" ToRole="Fantasy_team" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_league_id" FromRole="League" ToRole="Match" />
+          <NavigationProperty Name="Listed_in" Relationship="Self.FK_Listed_in_League" FromRole="League" ToRole="Listed_in" />
+        </EntityType>
+        <EntityType Name="Listed_in">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="nickname" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="nickname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="league_id" Type="Int32" Nullable="false" />
+          <Property Name="registration_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="League" Relationship="Self.FK_Listed_in_League" FromRole="Listed_in" ToRole="League" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Listed_in_Player" FromRole="Listed_in" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="match_id" />
+            <PropertyRef Name="league_id" />
+          </Key>
+          <Property Name="match_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="match_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="match_time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="location" Type="Geography" Nullable="false" />
+          <Property Name="team_color1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="team_color2" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="league_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Active_in" Relationship="Self.FK_Active_in_Match1" FromRole="Match" ToRole="Active_in" />
+          <NavigationProperty Name="League" Relationship="Self.FK_league_id" FromRole="Match" ToRole="League" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="nickname" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="nickname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="player_score" Type="Int32" Nullable="false" />
+          <Property Name="games_played" Type="Int32" Nullable="false" />
+          <Property Name="total_wins" Type="Int32" Nullable="false" />
+          <Property Name="total_goals_scored" Type="Int32" Nullable="false" />
+          <Property Name="total_assists" Type="Int32" Nullable="false" />
+          <Property Name="total_pen_missed" Type="Int32" Nullable="false" />
+          <Property Name="total_goals_recieved" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Listed_in" Relationship="Self.FK_Listed_in_Player" FromRole="Player" ToRole="Listed_in" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Player_User" FromRole="Player" ToRole="User" />
+          <NavigationProperty Name="Fantasy_team" Relationship="Self.fantasy_team_players" FromRole="Player" ToRole="Fantasy_team" />
+        </EntityType>
+        <EntityType Name="Smart_calc">
+          <Key>
+            <PropertyRef Name="calc_id" />
+          </Key>
+          <Property Name="calc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wins_pts" Type="Int32" Nullable="false" />
+          <Property Name="goals_pts" Type="Int32" Nullable="false" />
+          <Property Name="assists_pts" Type="Int32" Nullable="false" />
+          <Property Name="pen_missed_minus_pts" Type="Int32" Nullable="false" />
+          <Property Name="goals_recieved_minus_pts" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Active_in" Relationship="Self.FK_Active_in_User" FromRole="User" ToRole="Active_in" />
+          <NavigationProperty Name="Fantasy_team" Relationship="Self.FK_Fantasy_team_User" FromRole="User" ToRole="Fantasy_team" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Player_User" FromRole="User" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_Active_in_Match1">
+          <End Role="Match" Type="Self.Match" Multiplicity="1" />
+          <End Role="Active_in" Type="Self.Active_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="match_id" />
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Active_in">
+              <PropertyRef Name="match_id" />
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Active_in_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Active_in" Type="Self.Active_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Active_in">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fantasy_team_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Fantasy_team">
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fantasy_team_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Fantasy_team">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_league_id">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Listed_in_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Listed_in" Type="Self.Listed_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="league_id" />
+            </Principal>
+            <Dependent Role="Listed_in">
+              <PropertyRef Name="league_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Listed_in_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Listed_in" Type="Self.Listed_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="nickname" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Listed_in">
+              <PropertyRef Name="nickname" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fantasy_team_players">
+          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="bgroup89_test2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Active_in" EntityType="Self.Active_in" />
+          <EntitySet Name="Fantasy_team" EntityType="Self.Fantasy_team" />
+          <EntitySet Name="League" EntityType="Self.League" />
+          <EntitySet Name="Listed_in" EntityType="Self.Listed_in" />
+          <EntitySet Name="Match" EntityType="Self.Match" />
+          <EntitySet Name="Player" EntityType="Self.Player" />
+          <EntitySet Name="Smart_calc" EntityType="Self.Smart_calc" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Active_in_Match1" Association="Self.FK_Active_in_Match1">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Active_in" EntitySet="Active_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Active_in_User" Association="Self.FK_Active_in_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Active_in" EntitySet="Active_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fantasy_team_League" Association="Self.FK_Fantasy_team_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fantasy_team_User" Association="Self.FK_Fantasy_team_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_league_id" Association="Self.FK_league_id">
+            <End Role="League" EntitySet="League" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Listed_in_League" Association="Self.FK_Listed_in_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="Listed_in" EntitySet="Listed_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Listed_in_Player" Association="Self.FK_Listed_in_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Listed_in" EntitySet="Listed_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_User" Association="Self.FK_Player_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="fantasy_team_players" Association="Self.fantasy_team_players">
+            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bgroup89_test2ModelStoreContainer" CdmEntityContainer="bgroup89_test2Entities">
+          <EntitySetMapping Name="Active_in">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.Active_in">
+              <MappingFragment StoreEntitySet="Active_in">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="attending" ColumnName="attending" />
+                <ScalarProperty Name="pen_missed" ColumnName="pen_missed" />
+                <ScalarProperty Name="goals_recieved" ColumnName="goals_recieved" />
+                <ScalarProperty Name="apporval_status" ColumnName="apporval_status" />
+                <ScalarProperty Name="match_color" ColumnName="match_color" />
+                <ScalarProperty Name="assists" ColumnName="assists" />
+                <ScalarProperty Name="goals_scored" ColumnName="goals_scored" />
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="league_id" ColumnName="league_id" />
+                <ScalarProperty Name="wins" ColumnName="wins" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fantasy_team">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.Fantasy_team">
+              <MappingFragment StoreEntitySet="Fantasy_team">
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="team_budget" ColumnName="team_budget" />
+                <ScalarProperty Name="league_id" ColumnName="league_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="team_points" ColumnName="team_points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="League">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.League">
+              <MappingFragment StoreEntitySet="League">
+                <ScalarProperty Name="league_id" ColumnName="league_id" />
+                <ScalarProperty Name="league_name" ColumnName="league_name" />
+                <ScalarProperty Name="league_picture" ColumnName="league_picture" />
+                <ScalarProperty Name="games_played" ColumnName="games_played" />
+                <ScalarProperty Name="league_rules" ColumnName="league_rules" />
+                <ScalarProperty Name="invite_url" ColumnName="invite_url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Listed_in">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.Listed_in">
+              <MappingFragment StoreEntitySet="Listed_in">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="league_id" ColumnName="league_id" />
+                <ScalarProperty Name="registration_date" ColumnName="registration_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Match">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.Match">
+              <MappingFragment StoreEntitySet="Match">
+                <ScalarProperty Name="match_id" ColumnName="match_id" />
+                <ScalarProperty Name="match_date" ColumnName="match_date" />
+                <ScalarProperty Name="match_time" ColumnName="match_time" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="team_color1" ColumnName="team_color1" />
+                <ScalarProperty Name="team_color2" ColumnName="team_color2" />
+                <ScalarProperty Name="league_id" ColumnName="league_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Player">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="player_score" ColumnName="player_score" />
+                <ScalarProperty Name="games_played" ColumnName="games_played" />
+                <ScalarProperty Name="total_wins" ColumnName="total_wins" />
+                <ScalarProperty Name="total_goals_scored" ColumnName="total_goals_scored" />
+                <ScalarProperty Name="total_assists" ColumnName="total_assists" />
+                <ScalarProperty Name="total_pen_missed" ColumnName="total_pen_missed" />
+                <ScalarProperty Name="total_goals_recieved" ColumnName="total_goals_recieved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Smart_calc">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.Smart_calc">
+              <MappingFragment StoreEntitySet="Smart_calc">
+                <ScalarProperty Name="calc_id" ColumnName="calc_id" />
+                <ScalarProperty Name="wins_pts" ColumnName="wins_pts" />
+                <ScalarProperty Name="goals_pts" ColumnName="goals_pts" />
+                <ScalarProperty Name="assists_pts" ColumnName="assists_pts" />
+                <ScalarProperty Name="pen_missed_minus_pts" ColumnName="pen_missed_minus_pts" />
+                <ScalarProperty Name="goals_recieved_minus_pts" ColumnName="goals_recieved_minus_pts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="bgroup89_test2Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="fantasy_team_players" TypeName="bgroup89_test2Model.fantasy_team_players" StoreEntitySet="fantasy_team_players">
+            <EndProperty Name="Fantasy_team">
+              <ScalarProperty Name="team_id" ColumnName="team_id" />
+              <ScalarProperty Name="league_id" ColumnName="league_id" />
+            </EndProperty>
+            <EndProperty Name="Player">
+              <ScalarProperty Name="nickname" ColumnName="nickname" />
+              <ScalarProperty Name="user_id" ColumnName="user_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
