@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary2;
+using Newtonsoft.Json;
+
 
 namespace WebAPI.Controllers
 {
@@ -19,16 +21,24 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/LogIn/5
-        public bool Get(string inputEmail, string inputPassword)
+        public HttpResponseMessage Get(dynamic userData)
         {
-            bool isRegisterd = false;
-            User userEmail = db.User.Where(e => e.email.Equals(inputEmail)).FirstOrDefault();
-            User userPassword = db.User.Where(p => p.password.Equals(inputPassword)).FirstOrDefault();
-            if (userEmail != null && userPassword != null)
+            try 
+            { 
+            User user = JsonConvert.DeserializeObject<User>(userData.ToString());
+            User userEmail = db.User.Where(e => e.email.Equals(user.email)).FirstOrDefault();
+            User userPassword = db.User.Where(p => p.password.Equals(user.password)).FirstOrDefault();
+            if(userEmail != null && userPassword != null)
             {
-                isRegisterd = true;
+                return Request.CreateResponse(HttpStatusCode.OK, user.user_id);
+                
             }
-            return isRegisterd;
+            return Request.CreateResponse(HttpStatusCode.NotFound, "");
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "");
+            }
         }
 
         // POST: api/LogIn

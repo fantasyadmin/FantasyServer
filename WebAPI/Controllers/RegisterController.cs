@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary2;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
@@ -20,22 +21,41 @@ namespace WebAPI.Controllers
         // GET: api/Register/email,pass
         public string Get(int id)
         {
-            return "Banana2" ;
+            return "value" ;
         }
 
         // POST: api/Register
-        public string Post([FromBody] User user)
+        public HttpResponseMessage Post(dynamic userData)
         {
             try
             {
+                //
+                User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+
+                if (user == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "User");
+                }
+
+                Player player = JsonConvert.DeserializeObject<Player>(userData.player.ToString());
+
+                if (player == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Player");
+                }
+
                 User u = new User() { email = user.email, password = user.password };
                 db.User.Add(u);
+               
+                Player newPlayer = player;
+                newPlayer.user_id = u.user_id;
+                db.Player.Add(newPlayer);
                 db.SaveChanges();
-                return "ok";
+                return Request.CreateResponse(HttpStatusCode.OK, user.user_id,player.nickname);
             }
-            catch (Exception e)
+            catch
             {
-                return e.Message;
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "");   
             }
         }
 
