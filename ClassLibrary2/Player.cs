@@ -23,7 +23,7 @@ namespace ClassLibrary2
     
         public string nickname { get; set; }
         public int user_id { get; set; }
-        public byte[] picture { get; set; }
+        public string picture { get; set; }
         public int player_score { get; set; }
         public int games_played { get; set; }
         public int total_wins { get; set; }

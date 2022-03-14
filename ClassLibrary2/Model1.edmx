@@ -383,7 +383,7 @@
           </Key>
           <Property Name="nickname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="picture" Type="String" />
           <Property Name="player_score" Type="Int32" Nullable="false" />
           <Property Name="games_played" Type="Int32" Nullable="false" />
           <Property Name="total_wins" Type="Int32" Nullable="false" />
