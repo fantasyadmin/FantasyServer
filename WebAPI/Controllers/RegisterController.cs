@@ -25,12 +25,25 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Register
-        public string Post(dynamic userData)
+        public HttpResponseMessage Post(dynamic userData)
         {
             try
             {
+                //
                 User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+
+                if (user == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "User");
+                }
+
                 Player player = JsonConvert.DeserializeObject<Player>(userData.player.ToString());
+
+                if (player == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Player");
+                }
+
                 User u = new User() { email = user.email, password = user.password };
                 db.User.Add(u);
                
@@ -38,11 +51,11 @@ namespace WebAPI.Controllers
                 newPlayer.user_id = u.user_id;
                 db.Player.Add(newPlayer);
                 db.SaveChanges();
-                return "ok";
+                return Request.CreateResponse(HttpStatusCode.OK, user.user_id,player.nickname);
             }
-            catch (Exception e)
+            catch
             {
-                return e.Message;
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "");   
             }
         }
 
