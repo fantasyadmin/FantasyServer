@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
             User userPassword = db.User.Where(p => p.password.Equals(user.password)).FirstOrDefault();
             if(userEmail != null && userPassword != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, user.user_id);
+                return Request.CreateResponse(HttpStatusCode.OK, user);
                 
             }
             return Request.CreateResponse(HttpStatusCode.NotFound, "");
