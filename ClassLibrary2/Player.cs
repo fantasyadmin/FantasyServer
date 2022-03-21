@@ -12,55 +12,57 @@
 namespace ClassLibrary2
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class Player
-{
+    using System.Web.Http.Cors;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Player()
+    public partial class Player
     {
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
 
-        this.Listed_in = new HashSet<Listed_in>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Player()
+        {
 
-        this.Fantasy_team = new HashSet<Fantasy_team>();
+            this.Listed_in = new HashSet<Listed_in>();
+
+            this.Fantasy_team = new HashSet<Fantasy_team>();
+
+        }
+
+
+        public string nickname { get; set; }
+
+        public int user_id { get; set; }
+
+        public byte[] picture { get; set; }
+
+        public int player_score { get; set; }
+
+        public int games_played { get; set; }
+
+        public int total_wins { get; set; }
+
+        public int total_goals_scored { get; set; }
+
+        public int total_assists { get; set; }
+
+        public int total_pen_missed { get; set; }
+
+        public int total_goals_recieved { get; set; }
+
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Listed_in> Listed_in { get; set; }
+
+        public virtual User User { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Fantasy_team> Fantasy_team { get; set; }
 
     }
-
-
-    public string nickname { get; set; }
-
-    public int user_id { get; set; }
-
-    public byte[] picture { get; set; }
-
-    public int player_score { get; set; }
-
-    public int games_played { get; set; }
-
-    public int total_wins { get; set; }
-
-    public int total_goals_scored { get; set; }
-
-    public int total_assists { get; set; }
-
-    public int total_pen_missed { get; set; }
-
-    public int total_goals_recieved { get; set; }
-
-
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Listed_in> Listed_in { get; set; }
-
-    public virtual User User { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Fantasy_team> Fantasy_team { get; set; }
-
-}
 
 }

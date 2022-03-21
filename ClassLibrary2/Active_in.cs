@@ -12,40 +12,41 @@
 namespace ClassLibrary2
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class Active_in
-{
+    using System.Web.Http.Cors;
 
-    public int user_id { get; set; }
+    public partial class Active_in
+    {
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+        public int user_id { get; set; }
 
-    public byte attending { get; set; }
+        public byte attending { get; set; }
 
-    public int pen_missed { get; set; }
+        public int pen_missed { get; set; }
 
-    public int goals_recieved { get; set; }
+        public int goals_recieved { get; set; }
 
-    public byte apporval_status { get; set; }
+        public byte apporval_status { get; set; }
 
-    public string match_color { get; set; }
+        public string match_color { get; set; }
 
-    public int assists { get; set; }
+        public int assists { get; set; }
 
-    public int goals_scored { get; set; }
+        public int goals_scored { get; set; }
 
-    public int match_id { get; set; }
+        public int match_id { get; set; }
 
-    public int league_id { get; set; }
+        public int league_id { get; set; }
 
-    public int wins { get; set; }
+        public int wins { get; set; }
 
 
 
-    public virtual Match Match { get; set; }
+        public virtual Match Match { get; set; }
 
-    public virtual User User { get; set; }
+        public virtual User User { get; set; }
 
-}
+    }
 
 }

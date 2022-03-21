@@ -12,45 +12,47 @@
 namespace ClassLibrary2
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class User
-{
+    using System.Web.Http.Cors;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public User()
+
+    public partial class User
     {
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
 
-        this.Active_in = new HashSet<Active_in>();
+            this.Active_in = new HashSet<Active_in>();
 
-        this.Fantasy_team = new HashSet<Fantasy_team>();
+            this.Fantasy_team = new HashSet<Fantasy_team>();
 
-        this.Player = new HashSet<Player>();
+            this.Player = new HashSet<Player>();
+
+        }
+
+
+        public int user_id { get; set; }
+
+        public string email { get; set; }
+
+        public string password { get; set; }
+
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Active_in> Active_in { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Fantasy_team> Fantasy_team { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Player> Player { get; set; }
 
     }
-
-
-    public int user_id { get; set; }
-
-    public string email { get; set; }
-
-    public string password { get; set; }
-
-
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Active_in> Active_in { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Fantasy_team> Fantasy_team { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Player> Player { get; set; }
-
-}
 
 }

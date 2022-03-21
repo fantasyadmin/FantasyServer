@@ -11,17 +11,19 @@ namespace WebAPI.Controllers
 {
     public class RegisterController : ApiController
     {
+
         bgroup89_test2Entities db = new bgroup89_test2Entities();
+
         // GET: api/Register
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1111", "value2" };
         }
 
         // GET: api/Register/email,pass
         public string Get(int id)
         {
-            return "value" ;
+            return "value";
         }
 
         // POST: api/Register
@@ -46,21 +48,21 @@ namespace WebAPI.Controllers
 
                 User u = new User() { email = user.email, password = user.password };
                 db.User.Add(u);
-               
+
                 Player newPlayer = player;
                 newPlayer.user_id = u.user_id;
                 db.Player.Add(newPlayer);
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, user.user_id,player.nickname);
+                return Request.CreateResponse(HttpStatusCode.OK, user.user_id, player.nickname);
             }
             catch
             {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "");   
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "");
             }
         }
 
         // PUT: api/Register/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

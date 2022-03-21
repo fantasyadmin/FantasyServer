@@ -14,11 +14,12 @@ namespace ClassLibrary2
 
 using System;
     using System.Collections.Generic;
-    
-public partial class Listed_in
-{
+    using System.Web.Http.Cors;
 
-    public int user_id { get; set; }
+    public partial class Listed_in
+{
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+        public int user_id { get; set; }
 
     public string nickname { get; set; }
 

@@ -12,24 +12,27 @@
 namespace ClassLibrary2
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class Smart_calc
-{
+    using System.Web.Http.Cors;
 
-    public int calc_id { get; set; }
 
-    public int wins_pts { get; set; }
+    public partial class Smart_calc
+    {
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
 
-    public int goals_pts { get; set; }
+        public int calc_id { get; set; }
 
-    public int assists_pts { get; set; }
+        public int wins_pts { get; set; }
 
-    public int pen_missed_minus_pts { get; set; }
+        public int goals_pts { get; set; }
 
-    public int goals_recieved_minus_pts { get; set; }
+        public int assists_pts { get; set; }
 
-}
+        public int pen_missed_minus_pts { get; set; }
+
+        public int goals_recieved_minus_pts { get; set; }
+
+    }
 
 }

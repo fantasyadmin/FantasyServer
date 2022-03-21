@@ -12,41 +12,42 @@
 namespace ClassLibrary2
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class Fantasy_team
-{
+    using System.Web.Http.Cors;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Fantasy_team()
+    public partial class Fantasy_team
     {
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Fantasy_team()
+        {
 
-        this.Player = new HashSet<Player>();
+            this.Player = new HashSet<Player>();
+
+        }
+
+
+        public int team_id { get; set; }
+
+        public int team_budget { get; set; }
+
+        public int league_id { get; set; }
+
+        public Nullable<int> user_id { get; set; }
+
+        public int team_points { get; set; }
+
+
+
+        public virtual League League { get; set; }
+
+        public virtual User User { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Player> Player { get; set; }
 
     }
-
-
-    public int team_id { get; set; }
-
-    public int team_budget { get; set; }
-
-    public int league_id { get; set; }
-
-    public Nullable<int> user_id { get; set; }
-
-    public int team_points { get; set; }
-
-
-
-    public virtual League League { get; set; }
-
-    public virtual User User { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Player> Player { get; set; }
-
-}
 
 }

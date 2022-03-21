@@ -9,46 +9,51 @@
 //------------------------------------------------------------------------------
 
 
+using System.Web.Http.Cors;
+
 namespace ClassLibrary2
 {
 
-using System;
+
+
+    using System;
     using System.Collections.Generic;
-    
-public partial class Match
-{
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Match()
+    public partial class Match
     {
+        EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Match()
+        {
 
-        this.Active_in = new HashSet<Active_in>();
+            this.Active_in = new HashSet<Active_in>();
+
+        }
+
+
+        public int match_id { get; set; }
+
+        public System.DateTime match_date { get; set; }
+
+        public System.TimeSpan match_time { get; set; }
+
+        public System.Data.Entity.Spatial.DbGeography location { get; set; }
+
+        public string team_color1 { get; set; }
+
+        public string team_color2 { get; set; }
+
+        public int league_id { get; set; }
+
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<Active_in> Active_in { get; set; }
+
+        public virtual League League { get; set; }
 
     }
-
-
-    public int match_id { get; set; }
-
-    public System.DateTime match_date { get; set; }
-
-    public System.TimeSpan match_time { get; set; }
-
-    public System.Data.Entity.Spatial.DbGeography location { get; set; }
-
-    public string team_color1 { get; set; }
-
-    public string team_color2 { get; set; }
-
-    public int league_id { get; set; }
-
-
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Active_in> Active_in { get; set; }
-
-    public virtual League League { get; set; }
-
-}
 
 }

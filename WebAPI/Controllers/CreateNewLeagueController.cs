@@ -13,6 +13,7 @@ namespace WebAPI.Controllers
     {
         bgroup89_test2Entities db = new bgroup89_test2Entities();
 
+
         // GET: api/CreateNewLeague
         public IEnumerable<string> Get()
         {
