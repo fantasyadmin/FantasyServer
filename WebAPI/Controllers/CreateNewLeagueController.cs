@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
 
                 db.League.Add(l);
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, league.league_id);
+                return Request.CreateResponse(HttpStatusCode.OK, league);
             }
             catch
             {

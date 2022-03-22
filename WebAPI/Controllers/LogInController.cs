@@ -30,8 +30,7 @@ namespace WebAPI.Controllers
             User userPassword = db.User.Where(p => p.password.Equals(user.password)).FirstOrDefault();
             if(userEmail != null && userPassword != null)
             {
-                    //צריך להחזיר פרטי משתמש מלאים - שם משתמש, משחקים, ציון, כל המידע.... מפה מושכים את הכל
-                return Request.CreateResponse(HttpStatusCode.OK, user.user_id);
+                return Request.CreateResponse(HttpStatusCode.OK, user);
                 
             }
             return Request.CreateResponse(HttpStatusCode.NotFound, "");
