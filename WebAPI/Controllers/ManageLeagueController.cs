@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -35,11 +36,11 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/ManageLeague
-        public HttpResponseMessage Post(int league_id, dynamic new_league_details)
+        public HttpResponseMessage Post(int league_id, JObject new_league_details)
         {
             try
             {
-                League league = JsonConvert.DeserializeObject<League>(new_league_details.league.ToString());
+                League league = JsonConvert.DeserializeObject<League>(new_league_details.ToString());
                 League newLeague = db.League.Where(p => p.league_id == league_id).FirstOrDefault();
 
                 newLeague.league_name = league.league_name;

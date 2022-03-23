@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -25,12 +26,12 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/CreatePlayer
-        public HttpResponseMessage Post(dynamic userData)
+        public HttpResponseMessage Post(JObject userData)
         {
             try
             {
                 //
-                Player player = JsonConvert.DeserializeObject<Player>(userData.player.ToString());
+                Player player = JsonConvert.DeserializeObject<Player>(userData.ToString());
 
                 if (player == null)
                 {

@@ -7,6 +7,7 @@ using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
 using System.Net.Mail;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -20,10 +21,10 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Register/email,pass
-        public HttpResponseMessage Get(dynamic userData)
+        public HttpResponseMessage Get(JObject userData)
         {
             //Converting userData to User
-            User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+            User user = JsonConvert.DeserializeObject<User>(userData.ToString());
             if (user == null)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching user input - Oops... Something Went Wrong!");

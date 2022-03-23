@@ -335,7 +335,7 @@
           </Key>
           <Property Name="league_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="league_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="league_picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="league_picture" Type="String" />
           <Property Name="games_played" Type="Int32" Nullable="false" />
           <Property Name="league_rules" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="invite_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />

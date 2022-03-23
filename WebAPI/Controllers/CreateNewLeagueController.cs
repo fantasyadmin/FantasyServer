@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -26,13 +27,13 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/CreateNewLeague
-        public HttpResponseMessage Post(dynamic leagueData)
+        public HttpResponseMessage Post(JObject leagueData)
         {
             try
             {
                 //
-                League league = JsonConvert.DeserializeObject<League>(leagueData.league.ToString());
-                League l = new League() { league_name = league.league_name/*, league_picture = league.league_picture*/, league_rules = league.league_rules, invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705" };
+                League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
+                League l = new League() { league_name = league.league_name , league_picture = league.league_picture, league_rules = league.league_rules, invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705" };
 
                 db.League.Add(l);
                 db.SaveChanges();

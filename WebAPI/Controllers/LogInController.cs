@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
-
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -21,12 +21,12 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/LogIn/5
-        public HttpResponseMessage Get(dynamic userData)
+        public HttpResponseMessage Get(JObject userData)
         {
             try 
             { 
             //Converting userData to User
-            User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+            User user = JsonConvert.DeserializeObject<User>(userData.ToString());
             //find the user
             User u = db.User.Where(e => e.email == user.email).FirstOrDefault();
             
