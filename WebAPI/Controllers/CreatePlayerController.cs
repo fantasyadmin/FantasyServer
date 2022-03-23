@@ -38,7 +38,8 @@ namespace WebAPI.Controllers
                 }
 
                 Player p = new Player() { 
-                    nickname = player.nickname, picture = player.picture,
+                    nickname = player.nickname,
+                    picture = player.picture,
                     player_score = player.player_score,
                     total_assists = player.total_assists,
                     games_played = player.games_played,

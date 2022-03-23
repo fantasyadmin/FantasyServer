@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="231f9aaa0beb420686d5c4387cefbc01" Name="Diagram1" ZoomLevel="94">
+      <Diagram DiagramId="231f9aaa0beb420686d5c4387cefbc01" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="bgroup89_test2Model.Active_in" Width="1.5" PointX="3.375" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.Fantasy_team" Width="1.5" PointX="5.625" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.League" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
@@ -22,6 +22,7 @@
         <AssociationConnector Association="bgroup89_test2Model.FK_Listed_in_Player" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_test2Model.FK_Player_User" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_test2Model.fantasy_team_players" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.sysdiagrams" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

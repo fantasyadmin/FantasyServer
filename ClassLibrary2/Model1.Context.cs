@@ -48,6 +48,8 @@ public partial class bgroup89_test2Entities : DbContext
 
     public virtual DbSet<User> User { get; set; }
 
+    public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+
 }
 
 }

@@ -25,19 +25,21 @@ namespace WebAPI.Controllers
         {
             try 
             { 
-            User user = JsonConvert.DeserializeObject<User>(userData.ToString());
-            User userEmail = db.User.Where(e => e.email.Equals(user.email)).FirstOrDefault();
-            User userPassword = db.User.Where(p => p.password.Equals(user.password)).FirstOrDefault();
-            if(userEmail != null && userPassword != null)
+            //Converting userData to User
+            User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+            //find the user
+            User u = db.User.Where(e => e.email == user.email).FirstOrDefault();
+            
+            if(u.email != null && u.password != null && u.password == user.password)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, user);
                 
             }
-            return Request.CreateResponse(HttpStatusCode.NotFound, "");
+            return Request.CreateResponse(HttpStatusCode.NotFound, "LogIn - Wrong Email or Password");
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "LogIn - Oops... Something went wrong");
             }
         }
 

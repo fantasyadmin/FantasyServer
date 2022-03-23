@@ -20,55 +20,68 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Register/email,pass
-        public string Get(int id)
+        public HttpResponseMessage Get(dynamic userData)
         {
-            return "value" ;
+            //Converting userData to User
+            User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+            if (user == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching user input - Oops... Something Went Wrong!");
+            }
+            //Creating Confirmtaion Code
+            Random rnd = new Random();
+            int confirmationCode = rnd.Next(1000, 9999);
+
+            //Sending Confirmation email using smtp
+            try
+            {
+                string fromAdress = "fantasyleaguehood@gmail.com";
+                string fromPass = "dorguygal2022";
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress(fromAdress);
+                message.To.Add(new MailAddress(user.email));
+                message.Subject = "Confirm Registration";
+                message.IsBodyHtml = false; //to make message body as html  
+                message.Body = "Registration Code: " + (confirmationCode);
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host 
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential(fromAdress, fromPass);
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(message);
+
+                //Sending the confirmationCode to front to rcieve it back for Confirmtaion
+                return Request.CreateResponse(HttpStatusCode.OK, confirmationCode);
+            }
+            catch { return Request.CreateResponse(HttpStatusCode.BadRequest, $"Failed to send email to {user.email}"); };
         }
 
         // POST: api/Register
-        public HttpResponseMessage Post(dynamic userData, int confirmationCode)
+        public HttpResponseMessage Post(int confirmationCode, int userCodeInput, dynamic userData)
         {
             try
             {
-                //
+                //Converting userData to User
                 User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
-
                 if (user == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Creating User - Oops... Something Went Wrong!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching user input - Oops... Something Went Wrong!");
                 }
 
-                try
+                if (userCodeInput == confirmationCode)
                 {
-                    string fromAdress = "fantasyleaguehood@gmail.com";
-                    string fromPass = "dorguygal2022";
-                    MailMessage message = new MailMessage();
-                    SmtpClient smtp = new SmtpClient();
-                    message.From = new MailAddress(fromAdress);
-                    message.To.Add(new MailAddress(user.email));
-                    message.Subject = "Confirm Registration";
-                    message.IsBodyHtml = false; //to make message body as html  
-                    message.Body = "Registration Code: " + (user.user_id+ 100);
-                    smtp.Port = 587;
-                    smtp.Host = "smtp.gmail.com"; //for gmail host 
-                    smtp.EnableSsl = true;
-                    smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential(fromAdress, fromPass);
-                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.Send(message);
-                }
-                catch { return Request.CreateResponse(HttpStatusCode.BadRequest, "Failed to send email"); }
+                    User u = new User() { email = user.email, password = user.password };
+                    Player p = new Player() { league_manager = true };
+                    db.User.Add(u);
+                    db.Player.Add(p);
+                    db.SaveChanges();
 
-                if (confirmationCode != user.user_id + 100)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Inserted Incorrect Conmirfmation Code");
+                    return Request.CreateResponse(HttpStatusCode.OK, u);
                 }
 
-                User u = new User() { email = user.email, password = user.password };
-                db.User.Add(u);
-                db.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, u);
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Wrong Confirmation Code");
             }
             catch
             {

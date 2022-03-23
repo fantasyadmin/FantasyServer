@@ -26,21 +26,22 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/CreateNewLeague
-        public HttpResponseMessage Post([FromBody] dynamic leagueData)
+        public HttpResponseMessage Post(dynamic leagueData)
         {
             try
             {
                 //
                 League league = JsonConvert.DeserializeObject<League>(leagueData.league.ToString());
-                League l = new League() { league_name = league.league_name, league_picture = league.league_picture, league_rules = league.league_rules, invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705" };
+                League l = new League() { league_name = league.league_name/*, league_picture = league.league_picture*/, league_rules = league.league_rules, invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705" };
 
                 db.League.Add(l);
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, league);
+                return Request.CreateResponse(HttpStatusCode.OK, l);
             }
-            catch
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "");
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
     

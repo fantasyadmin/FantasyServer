@@ -33,7 +33,7 @@ public partial class Player
 
     public int user_id { get; set; }
 
-    public byte[] picture { get; set; }
+    public string picture { get; set; }
 
     public int player_score { get; set; }
 
@@ -48,6 +48,8 @@ public partial class Player
     public int total_pen_missed { get; set; }
 
     public int total_goals_recieved { get; set; }
+
+    public bool league_manager { get; set; }
 
 
 
