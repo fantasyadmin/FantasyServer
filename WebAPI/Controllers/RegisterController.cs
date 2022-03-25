@@ -60,12 +60,12 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Register
-        public HttpResponseMessage Post(int confirmationCode, int userCodeInput, dynamic userData)
+        public HttpResponseMessage Post(int confirmationCode, int userCodeInput, JObject userData)
         {
             try
             {
                 //Converting userData to User
-                User user = JsonConvert.DeserializeObject<User>(userData.user.ToString());
+                User user = JsonConvert.DeserializeObject<User>(userData.ToString());
                 if (user == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching user input - Oops... Something Went Wrong!");
@@ -98,6 +98,7 @@ namespace WebAPI.Controllers
         // DELETE: api/Register/5
         public void Delete(int id)
         {
+
         }
     }
 }
