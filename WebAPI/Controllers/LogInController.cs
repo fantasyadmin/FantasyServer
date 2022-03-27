@@ -20,8 +20,8 @@ namespace WebAPI.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        // GET: api/LogIn/5
-        public HttpResponseMessage Get( JObject userData)
+        // POST: api/LogIn/5
+        public bool Post(JObject userData)
         {
             try 
             { 
@@ -32,22 +32,22 @@ namespace WebAPI.Controllers
             
             if(u.email != null && u.password != null && u.password == user.password)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, "good connection");
+                return true;
                 
             }
-            return Request.CreateResponse(HttpStatusCode.NotFound, "LogIn - Wrong Email or Password");
+            return false;
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "LogIn - Oops... Something went wrong");
+                return false;
             }
         }
 
         // POST: api/LogIn
-        public void Post([FromBody]string value)
-        {
+        //public void Post([FromBody]string value)
+        //{
 
-        }
+        //}
 
         // PUT: api/LogIn/5
         public void Put(int id, [FromBody]string value)

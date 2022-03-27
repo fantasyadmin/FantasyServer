@@ -27,6 +27,7 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/CreateNewLeague
+        //send league_name, league_picture, league_rules. return (Ok, Not Found, Bad Request)
         public HttpResponseMessage Post(JObject leagueData)
         {
             try
@@ -41,7 +42,6 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
