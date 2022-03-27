@@ -13,11 +13,6 @@ namespace WebAPI.Controllers
     public class ManageLeagueController : ApiController
     {
         bgroup89_test2Entities db = new bgroup89_test2Entities();
-        // GET: api/ManageLeague
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
         // GET: api/ManageLeague/5
         public HttpResponseMessage Get(int league_id)

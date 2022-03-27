@@ -14,11 +14,6 @@ namespace WebAPI.Controllers
     public class RegisterController : ApiController
     {
         bgroup89_test2Entities db = new bgroup89_test2Entities();
-        // GET: api/Register
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
         // GET: api/Register/email,pass
         public HttpResponseMessage Get(JObject userData)
@@ -56,7 +51,10 @@ namespace WebAPI.Controllers
                 //Sending the confirmationCode to front to rcieve it back for Confirmtaion
                 return Request.CreateResponse(HttpStatusCode.OK, confirmationCode);
             }
-            catch { return Request.CreateResponse(HttpStatusCode.BadRequest, $"Failed to send email to {user.email}"); };
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, $"Failed to send email to {user.email}");
+            };
         }
 
         // POST: api/Register
@@ -86,12 +84,12 @@ namespace WebAPI.Controllers
             }
             catch
             {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Creating Player - Oops... Something Went Wrong!");   
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Creating Player - Oops... Something Went Wrong!");
             }
         }
 
         // PUT: api/Register/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

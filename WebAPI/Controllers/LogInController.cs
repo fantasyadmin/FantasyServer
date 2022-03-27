@@ -15,13 +15,13 @@ namespace WebAPI.Controllers
         bgroup89_test2Entities db = new bgroup89_test2Entities();
 
         // GET: api/LogIn
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
-        // GET: api/LogIn/5
-        public HttpResponseMessage Get( JObject userData)
+        // POST: api/LogIn/5
+        public HttpResponseMessage POST( JObject userData)
         {
             try 
             { 
@@ -32,21 +32,27 @@ namespace WebAPI.Controllers
             
             if(u.email != null && u.password != null && u.password == user.password)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, "good connection");
+                    Player p = new Player()
+                    {
+                        nickname = u.Player.Select(x=>x.nickname).FirstOrDefault(),
+                        picture = u.Player.Select(x => x.picture).FirstOrDefault(),
+                        player_score = u.Player.Select(x => x.player_score).FirstOrDefault(),
+                        total_assists = u.Player.Select(x => x.total_assists).FirstOrDefault(),
+                        games_played = u.Player.Select(x => x.games_played).FirstOrDefault(),
+                        total_goals_recieved = u.Player.Select(x => x.total_goals_recieved).FirstOrDefault(),
+                        total_goals_scored = u.Player.Select(x => x.total_goals_scored).FirstOrDefault(),
+                        total_pen_missed = u.Player.Select(x => x.total_pen_missed).FirstOrDefault(),
+                        total_wins = u.Player.Select(x => x.total_wins).FirstOrDefault()
+                    };
+                    return Request.CreateResponse(HttpStatusCode.OK, p);
                 
             }
             return Request.CreateResponse(HttpStatusCode.NotFound, "LogIn - Wrong Email or Password");
             }
-            catch
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "LogIn - Oops... Something went wrong");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "LogIn - Oops... Something went wrong"+e);
             }
-        }
-
-        // POST: api/LogIn
-        public void Post([FromBody]string value)
-        {
-
         }
 
         // PUT: api/LogIn/5

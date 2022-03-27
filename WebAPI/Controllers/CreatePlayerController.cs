@@ -13,11 +13,6 @@ namespace WebAPI.Controllers
     public class CreatePlayerController : ApiController
     {
         bgroup89_test2Entities db = new bgroup89_test2Entities();
-        // GET: api/CreatePlayer
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
         // GET: api/CreatePlayer/5
         public string Get(int id)
