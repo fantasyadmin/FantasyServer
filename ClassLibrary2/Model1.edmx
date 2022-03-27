@@ -352,7 +352,7 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="nickname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="league_id" Type="Int32" Nullable="false" />
-          <Property Name="registration_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="registration_date" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="League" Relationship="Self.FK_Listed_in_League" FromRole="Listed_in" ToRole="League" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Listed_in_Player" FromRole="Listed_in" ToRole="Player" />
         </EntityType>
