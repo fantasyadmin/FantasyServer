@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
 
-                if (player == null)
+                if (p1 == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Fetching Data - Oops... Player not found!");
                 }
@@ -51,8 +51,7 @@ namespace WebAPI.Controllers
                 p1.nickname = player.nickname;
                 p1.picture = player.picture;
 
-                db.Player.Add(p1);
-
+                db.Player.Append(p1);
                 db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK, p1);
@@ -65,31 +64,8 @@ namespace WebAPI.Controllers
 
         // PUT: api/EditPlayer/5
         //Recive user_id, picture, nickname. return player
-        public HttpResponseMessage Put(JObject userData)
+        public void Put(int id)
         {
-            try
-            {
-                Player player = JsonConvert.DeserializeObject<Player>(userData.ToString());
-
-                if (player == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching Data - Oops... Something Went Wrong!");
-                }
-
-                Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-
-                p1.nickname = player.nickname;
-                //p1.picture = player.picture;
-
-                db.Player.Add(p1);
-                db.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, p1);
-            }
-            catch
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Creating Player - Oops... Something Went Wrong!");
-            }
         }
 
         // DELETE: api/EditPlayer/5

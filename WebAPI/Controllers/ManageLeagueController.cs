@@ -20,16 +20,23 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/ManageLeague/5
-        public HttpResponseMessage Get(int league_id)
+        //Get League Data
+        //recive league_id. return league
+        public HttpResponseMessage Get(JObject leagueData)
         {
             try
             {
-                League league = db.League.Where(l => l.league_id == league_id).FirstOrDefault();
+                League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
                 if (league == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching League Data -Oops... Something went wrong");
+                }
+                League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+                if (l1 == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
                 }
-                return Request.CreateResponse(HttpStatusCode.OK,league);
+                return Request.CreateResponse(HttpStatusCode.OK,l1);
             }
             
             catch
@@ -40,70 +47,92 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/ManageLeague
-        public HttpResponseMessage Post(int league_id, JObject new_league_details)
+        //Add Player to League
+        //recive league_id, user_id, nickname. return league
+        public HttpResponseMessage Post(JObject leagueData)
         {
             try
             {
-                League league = JsonConvert.DeserializeObject<League>(new_league_details.ToString());
-                League newLeague = db.League.Where(p => p.league_id == league_id).FirstOrDefault();
-                if (newLeague == null)
+                League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
+                Player player = JsonConvert.DeserializeObject<Player>(leagueData.ToString());
+
+                Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
+
+                League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+
+                if (p1 == null || l1 == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
 
-                newLeague.league_name = league.league_name;
-                newLeague.league_picture = league.league_picture;
-                newLeague.league_rules = league.league_rules; 
-                db.League.Add(newLeague);
+                Listed_in ls = new Listed_in()
+                {
+                    league_id = l1.league_id,
+                    user_id = p1.user_id,
+                    nickname = p1.nickname,
+                    registration_date = DateTime.Now
+                };
+
+                db.Listed_in.Add(ls);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, newLeague);
+                return Request.CreateResponse(HttpStatusCode.OK, l1);
             }
-            catch
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,"Update League Details - Oops... Something went wrong");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
         //POST: api/ManageLeague/5
-        public HttpResponseMessage Post(int user_id, int league_id)
+        //Edit League Data
+        //recive league_id, league_name, league_picture, league_rules. return league
+        public HttpResponseMessage Put(JObject leagueData)
         {
             try
             {
-                Player player = db.Player.Where(p => p.user_id == user_id).FirstOrDefault();
-                if (player == null)
+                League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
+                League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+                if (l1 == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "Player not found");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
                 }
 
-                DateTime registration_date = DateTime.Now;
-
-                Listed_in listed = new Listed_in() {user_id = player.user_id, nickname = player.nickname, registration_date = registration_date, league_id = league_id};
-                db.Listed_in.Add(listed);
+                l1.league_name = league.league_name;
+                l1.league_picture = league.league_picture;
+                l1.league_rules = league.league_rules;
+                db.League.Append(l1);
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, listed);
+
+                return Request.CreateResponse(HttpStatusCode.OK, l1);
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Adding Player to League - Oops... Something went wrong");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Update League Details - Oops... Something went wrong");
             }
         }
 
 
         // DELETE: api/ManageLeague/5
-        public HttpResponseMessage Delete(int user_id)
+        //Delete Player from League
+        //recive user_id. return ListedIn
+        public HttpResponseMessage Delete(JObject leagueData)
         {
             try
             {
-                 Listed_in player_Listed_in = db.Listed_in.Where(p => p.user_id == user_id).FirstOrDefault();
-                 if (player_Listed_in == null)
+                Listed_in listed = JsonConvert.DeserializeObject<Listed_in>(leagueData.ToString());
+                //Player player = JsonConvert.DeserializeObject<Player>(leagueData.ToString());
+
+                Listed_in ls = db.Listed_in.Where(p => p.user_id == listed.user_id).FirstOrDefault();
+
+                 if (ls == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Player not found");
                 }
             
-               db.Listed_in.Remove(player_Listed_in);
+               db.Listed_in.Remove(ls);
                db.SaveChanges();
-               return Request.CreateResponse(HttpStatusCode.OK, user_id);
+               return Request.CreateResponse(HttpStatusCode.OK, ls);
             }
             catch
             {

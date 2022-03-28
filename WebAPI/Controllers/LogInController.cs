@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         //}
 
         // POST: api/LogIn/5
-        public bool Post(JObject userData)
+        public HttpResponseMessage Post(JObject userData)
         {
             try 
             { 
@@ -32,14 +32,13 @@ namespace WebAPI.Controllers
             
             if(u.email != null && u.password != null && u.password == user.password)
             {
-                return true;
-                
+                return Request.CreateResponse(HttpStatusCode.OK,u);
             }
-            return false;
+            return Request.CreateResponse(HttpStatusCode.NotFound,"");
             }
             catch
             {
-                return false;
+                return Request.CreateResponse(HttpStatusCode.BadRequest,"");
             }
         }
 
