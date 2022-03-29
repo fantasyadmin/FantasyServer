@@ -35,6 +35,11 @@ namespace WebAPI.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching user input - Oops... Something Went Wrong!");
                 }
+                User u1 = db.User.Where(a => a.email == user.email).FirstOrDefault();
+                if (u1 != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Email already exist");
+                }
 
                 User u = new User() { email = user.email, password = user.password };
                 Player p = new Player() { nickname = player.nickname, user_id = u.user_id };

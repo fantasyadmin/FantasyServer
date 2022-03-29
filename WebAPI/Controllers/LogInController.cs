@@ -21,6 +21,7 @@ namespace WebAPI.Controllers
         //}
 
         // POST: api/LogIn/5
+        //recive email, password. return Ok + User
         public HttpResponseMessage Post(JObject userData)
         {
             try 

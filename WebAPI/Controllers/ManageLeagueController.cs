@@ -14,10 +14,10 @@ namespace WebAPI.Controllers
     {
         bgroup89_test2Entities db = new bgroup89_test2Entities();
         //GET: api/ManageLeague
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/ManageLeague/5
         //Get League Data
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
 
         // POST: api/ManageLeague
         //Add Player to League
-        //recive league_id, user_id, nickname. return league
+        //recive league_id, user_id. return league
         public HttpResponseMessage Post(JObject leagueData)
         {
             try
