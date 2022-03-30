@@ -38,7 +38,6 @@ public partial class Fantasy_team
     public int team_points { get; set; }
 
 
-
     public virtual League League { get; set; }
 
     public virtual User User { get; set; }

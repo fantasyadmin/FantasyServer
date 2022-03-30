@@ -106,9 +106,9 @@ namespace WebAPI.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, l1);
             }
-            catch
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Update League Details - Oops... Something went wrong");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
@@ -134,9 +134,9 @@ namespace WebAPI.Controllers
                db.SaveChanges();
                return Request.CreateResponse(HttpStatusCode.OK, ls);
             }
-            catch
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Delete Player from League - Oops... Something went wrong"); ;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e); ;
             }
 
         }

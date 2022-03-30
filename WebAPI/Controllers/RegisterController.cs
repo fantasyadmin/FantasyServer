@@ -51,9 +51,9 @@ namespace WebAPI.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, u);
             }
-            catch
+            catch (Exception e)
             {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Creating Player - Oops... Something Went Wrong!");   
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, e);   
             }
         }
 

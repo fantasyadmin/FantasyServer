@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.NotFound,"");
             }
-            catch
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,"");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
