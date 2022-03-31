@@ -7,37 +7,32 @@ using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace WebAPI.Controllers
 {
     public class CreateNewLeagueController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         bgroup89_test2Entities db = new bgroup89_test2Entities();
 
-        // GET: api/CreateNewLeague
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET: api/CreateNewLeague/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/CreateNewLeague
         //send user_id, league_name, league_picture, league_rules. return (Ok, Not Found, Bad Request)
         public HttpResponseMessage Post(JObject leagueData)
         {
+            logger.Trace("POST - CreateNewLeagueController");
+            League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
+            Player player = JsonConvert.DeserializeObject<Player>(leagueData.ToString());
+
             try
             {
-                //
-                League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
-                Player player = JsonConvert.DeserializeObject<Player>(leagueData.ToString());
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
                 p1.league_manager = true;
+                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+
 
                 League l = new League()
                 {
@@ -65,11 +60,13 @@ namespace WebAPI.Controllers
 
                 db.Listed_in.Add(ls);
                 db.SaveChanges();
+                logger.Trace("League created in DB for user - " + p1.user_id + " league - " + l.league_id);
 
                 return Request.CreateResponse(HttpStatusCode.OK, l);
             }
             catch (Exception e)
             {
+                logger.Error("Bad Request, could not create league for player: " + player.user_id + " | league: " + league.league_id + ", " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }

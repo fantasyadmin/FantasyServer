@@ -7,44 +7,43 @@ using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace WebAPI.Controllers
 {
     public class EditPlayerController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+
         bgroup89_test2Entities db = new bgroup89_test2Entities();
 
 
-        // GET: api/EditPlayer
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/EditPlayer/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/EditPlayer
         //Recive user_id, picture, nickname. return player
 
         public HttpResponseMessage Post(JObject userData)
         {
+            logger.Trace("POST - EditPlayerController");
+            Player player = JsonConvert.DeserializeObject<Player>(userData.ToString());
+
             try
             {
-                Player player = JsonConvert.DeserializeObject<Player>(userData.ToString());
+
 
                 if (player == null)
                 {
+                    logger.Error("POST - data was not recieved - Player: " + player);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching Data - Oops... Something Went Wrong!");
                 }
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
+                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
 
                 if (p1 == null)
                 {
+                    logger.Error("POST - Empty reference - Player: " + p1);
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Fetching Data - Oops... Player not found!");
                 }
 
@@ -53,11 +52,14 @@ namespace WebAPI.Controllers
 
                 db.Player.Append(p1);
                 db.SaveChanges();
+                logger.Trace("player data was edited in DB Player - " + p1.nickname);
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, p1);
             }
             catch (Exception e)
             {
+                logger.Error("Bad Request, could not edit data for player: " + player.nickname + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
