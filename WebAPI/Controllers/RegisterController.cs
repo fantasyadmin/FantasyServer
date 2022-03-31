@@ -21,8 +21,7 @@ namespace WebAPI.Controllers
         bgroup89_test2Entities db = new bgroup89_test2Entities();
 
         // POST: api/Register
-        //Recieve userName, email, Password
-        public HttpResponseMessage Post(/*JObject confirmationCode, JObject userCodeInput, */JObject userData)
+        public HttpResponseMessage Post(int confirmationCode, int userCodeInput, dynamic userData)
         {
             logger.Trace("POST - RegisterController");
 
@@ -77,7 +76,6 @@ namespace WebAPI.Controllers
         // DELETE: api/Register/5
         public void Delete(int id)
         {
-
         }
     }
 }

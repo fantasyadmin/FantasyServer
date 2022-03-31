@@ -48,6 +48,11 @@ namespace WebAPI.Controllers
         }
 
 
+        //public void Post([FromBody]string value)
+        //{
+
+        //}
+
         // PUT: api/LogIn/5
         public void Put(int id, [FromBody] string value)
         {
