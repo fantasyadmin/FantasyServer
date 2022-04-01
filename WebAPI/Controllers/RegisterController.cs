@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
                 }
 
                 User u1 = db.User.Where(a => a.email == user.email).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + user.email + "returned - " + u.email);
+                logger.Trace("POST - DB connection by - " + user.email + " returned - " + u.email);
 
                 if (u1 != null)
                 {

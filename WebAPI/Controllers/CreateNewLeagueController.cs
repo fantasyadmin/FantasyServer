@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
                 p1.league_manager = true;
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
 
                 League l = new League()

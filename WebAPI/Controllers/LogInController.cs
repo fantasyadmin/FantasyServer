@@ -32,12 +32,12 @@ namespace WebAPI.Controllers
 
                 if (u.email != null && u.password != null && u.password == user.password)
                 {
-                    logger.Trace("POST - DB connection by - " + user.email + "returned - " + u.email);
+                    logger.Trace("POST - DB connection by - " + user.email + " returned - " + u.email);
 
                     return Request.CreateResponse(HttpStatusCode.OK, u);
                 }
 
-                logger.Info("POST - DB connection by - " + user.email + "returned - " + u.email);
+                logger.Info("POST - DB connection by - " + user.email + " returned - " + u.email);
                 return Request.CreateResponse(HttpStatusCode.NotFound, "");
             }
             catch (Exception e)

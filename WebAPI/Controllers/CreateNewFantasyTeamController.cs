@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
                 }
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
                 if (p1 == null)
                 {
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 
 
                 db.Fantasy_team.Add(fs);
-                logger.Trace("Fantasy team added to DB for user - " + fs.user_id + "in league - " + fs.league_id);
+                logger.Trace("Fantasy team added to DB for user - " + fs.user_id + " in league - " + fs.league_id);
                 db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK, p1);

@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
                 }
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + league.league_id + "returned - " + l1.league_id);
+                logger.Trace("POST - DB connection by - " + league.league_id + " returned - " + l1.league_id);
 
                 if (l1 == null)
                 {
@@ -67,10 +67,10 @@ namespace WebAPI.Controllers
             {
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + league.league_id + "returned - " + l1.league_id);
+                logger.Trace("POST - DB connection by - " + league.league_id + " returned - " + l1.league_id);
 
                 if (p1 == null || l1 == null)
                 {

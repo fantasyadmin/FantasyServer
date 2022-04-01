@@ -39,12 +39,12 @@ namespace WebAPI.Controllers
                 }
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
                 if (p1 == null)
                 {
                     logger.Error("POST - Empty reference - Player: " + p1);
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "Fetching Data - Oops... Player not found!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, " Fetching Data - Oops... Player not found!");
                 }
 
                 p1.nickname = player.nickname;
