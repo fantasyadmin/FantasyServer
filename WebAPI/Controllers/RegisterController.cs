@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, data received = user: " + u + " | player: " + p + ", " + e);
+                logger.Error("Bad Request, data received = user: " + u + " | player: " + p + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }

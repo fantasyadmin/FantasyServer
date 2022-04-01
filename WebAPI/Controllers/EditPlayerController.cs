@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not edit data for player: " + player.nickname + e);
+                logger.Error("Bad Request, could not edit data for player: " + player.nickname + "=======>" + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
