@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
                 {
                     user_id = player.user_id,
                     league_id = league.league_id,
-                    //team_budget = 100
+                    team_budget = 100
                 };
 
 
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
                 logger.Trace("Fantasy team added to DB for user - " + fs.user_id + " in league - " + fs.league_id);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, p1);
+                return Request.CreateResponse(HttpStatusCode.OK, fs);
             }
             catch (Exception e)
             {

@@ -65,7 +65,6 @@ namespace WebAPI.Controllers
 
             try
             {
-
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
                 logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
@@ -90,6 +89,15 @@ namespace WebAPI.Controllers
                 logger.Trace("Adding user to league - " + ls.league_id + " user - " + ls.user_id);
                 db.SaveChanges();
 
+                // recive league_id, user_id. return new Fantasy Team
+                Fantasy_team ft = new Fantasy_team()
+                {
+                    league_id = ls.league_id,
+                    user_id = ls.user_id,
+                    team_budget = 100
+                };
+
+                db.Fantasy_team.Add(ft);
                 return Request.CreateResponse(HttpStatusCode.OK, l1);
             }
             catch (Exception e)

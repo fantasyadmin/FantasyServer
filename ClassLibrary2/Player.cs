@@ -18,7 +18,7 @@ namespace ClassLibrary2
         public Player()
         {
             this.Listed_in = new HashSet<Listed_in>();
-            this.Fantasy_team = new HashSet<Fantasy_team>();
+            this.Fantasy_team_players = new HashSet<Fantasy_team_players>();
         }
     
         public string nickname { get; set; }
@@ -37,6 +37,6 @@ namespace ClassLibrary2
         public virtual ICollection<Listed_in> Listed_in { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fantasy_team> Fantasy_team { get; set; }
+        public virtual ICollection<Fantasy_team_players> Fantasy_team_players { get; set; }
     }
 }

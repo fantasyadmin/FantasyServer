@@ -6,11 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="231f9aaa0beb420686d5c4387cefbc01" Name="Diagram1" ZoomLevel="80">
         <EntityTypeShape EntityType="bgroup89_test2Model.Active_in" Width="1.5" PointX="3.375" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_test2Model.Fantasy_team" Width="1.5" PointX="5.625" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Fantasy_team" Width="2.125" PointX="5.875" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.League" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.Listed_in" Width="1.5" PointX="11.625" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.Match" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_test2Model.Player" Width="1.5" PointX="9" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Player" Width="2.125" PointX="8.375" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.Smart_calc" Width="1.5" PointX="4.25" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.User" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <AssociationConnector Association="bgroup89_test2Model.FK_Active_in_Match1" ManuallyRouted="false" />
@@ -21,9 +21,11 @@
         <AssociationConnector Association="bgroup89_test2Model.FK_Listed_in_League" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_test2Model.FK_Listed_in_Player" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_test2Model.FK_Player_User" ManuallyRouted="false" />
-        <AssociationConnector Association="bgroup89_test2Model.fantasy_team_players" ManuallyRouted="false" />
         <EntityTypeShape EntityType="bgroup89_test2Model.sysdiagrams" Width="1.5" PointX="5.375" PointY="0.75" />
         <AssociationConnector Association="bgroup89_test2Model.Fantasy_team_players1" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Fantasy_team_players" Width="2" PointX="11.125" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="bgroup89_test2Model.FK_fantasy_team_players_Fantasy_team" />
+        <AssociationConnector Association="bgroup89_test2Model.FK_fantasy_team_players_Player1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

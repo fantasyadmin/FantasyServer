@@ -29,6 +29,8 @@ namespace WebAPI.Controllers
             {
                 //find the user
                 User u = db.User.Where(e => e.email == user.email).FirstOrDefault();
+                u.Fantasy_team = null;
+
 
                 if (u.email != null && u.password != null && u.password == user.password)
                 {
@@ -38,7 +40,7 @@ namespace WebAPI.Controllers
                 }
 
                 logger.Info("POST - DB connection by - " + user.email + " returned - " + u.email);
-                return Request.CreateResponse(HttpStatusCode.NotFound, "");
+                return Request.CreateResponse(HttpStatusCode.NotFound, "User not found, Check your email or password");
             }
             catch (Exception e)
             {
