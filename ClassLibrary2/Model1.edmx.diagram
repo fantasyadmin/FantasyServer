@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="231f9aaa0beb420686d5c4387cefbc01" Name="Diagram1" ZoomLevel="80">
-        <EntityTypeShape EntityType="bgroup89_test2Model.Active_in" Width="1.5" PointX="3.375" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_test2Model.Fantasy_team" Width="1.5" PointX="5.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Active_in" Width="1.5" PointX="3.375" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Fantasy_team" Width="1.5" PointX="5.625" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.League" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_test2Model.Listed_in" Width="1.5" PointX="10.625" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Listed_in" Width="1.5" PointX="11.625" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.Match" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_test2Model.Player" Width="1.5" PointX="7.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_test2Model.Smart_calc" Width="1.5" PointX="3.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Player" Width="1.5" PointX="9" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_test2Model.Smart_calc" Width="1.5" PointX="4.25" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_test2Model.User" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <AssociationConnector Association="bgroup89_test2Model.FK_Active_in_Match1" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_test2Model.FK_Active_in_User" ManuallyRouted="false" />
@@ -23,6 +23,7 @@
         <AssociationConnector Association="bgroup89_test2Model.FK_Player_User" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_test2Model.fantasy_team_players" ManuallyRouted="false" />
         <EntityTypeShape EntityType="bgroup89_test2Model.sysdiagrams" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="bgroup89_test2Model.Fantasy_team_players1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
