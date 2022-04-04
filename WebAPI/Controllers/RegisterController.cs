@@ -21,10 +21,10 @@ namespace WebAPI.Controllers
         bgroup89_test2Entities db = new bgroup89_test2Entities();
 
         // POST: api/Register
-        public HttpResponseMessage Post(int confirmationCode, int userCodeInput, dynamic userData)
+        //Recieve userName, email, Password, existing league id number
+        public HttpResponseMessage Post(/*JObject confirmationCode, JObject userCodeInput, */JObject userData)
         {
             logger.Trace("POST - RegisterController");
-
 
             //Converting userData to User
             User user = JsonConvert.DeserializeObject<User>(userData.ToString());
@@ -33,10 +33,11 @@ namespace WebAPI.Controllers
             Player player = JsonConvert.DeserializeObject<Player>(userData.ToString());
             Player p = new Player() { nickname = player.nickname, user_id = u.user_id };
 
+            League league = JsonConvert.DeserializeObject<League>(userData.ToString());
+
 
             try
             {
-
 
                 if (user == null || player == null)
                 {
@@ -45,7 +46,7 @@ namespace WebAPI.Controllers
                 }
 
                 User u1 = db.User.Where(a => a.email == user.email).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + user.email + "returned - " + u.email);
+                logger.Trace("POST - DB connection by - " + user.email + " returned - " + u.email);
 
                 if (u1 != null)
                 {
@@ -53,17 +54,47 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Email already exist");
                 }
 
+                League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+
+                if (l1 != null)
+                {
+                    Listed_in ls = new Listed_in()
+                    {
+                        league_id = l1.league_id,
+                        user_id = p.user_id,
+                        nickname = p.nickname,
+                        registration_date = DateTime.Now
+                    };
+
+                    db.Listed_in.Add(ls);
+                    logger.Trace("POST - added player to existing league - " + league.league_id + " added user: - " + u.user_id);
+                    Fantasy_team ft = new Fantasy_team()
+                    {
+                        user_id = p.user_id,
+                        league_id = l1.league_id,
+                        team_budget = 100
+                    };
+                    db.Fantasy_team.Add(ft);
+                    logger.Trace("POST - added Fantasy-Team to League - " + league.league_id);
+
+                }
+
+
+
                 db.User.Add(u);
                 logger.Trace("User added to DB" + u.email);
                 db.Player.Add(p);
                 logger.Trace("Player added to DB" + p.nickname);
                 db.SaveChanges();
                 logger.Trace("Changes Saved to DB - SUCCESS!");
-                return Request.CreateResponse(HttpStatusCode.OK, u);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
+
+                //return Request.CreateResponse(HttpStatusCode.OK, u.user_id);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, data received = user: " + u + " | player: " + p + ", " + e);
+                logger.Error("Bad Request, data received = user: " + u + " | player: " + p + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }

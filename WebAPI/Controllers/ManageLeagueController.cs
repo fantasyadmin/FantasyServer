@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -35,20 +36,42 @@ namespace WebAPI.Controllers
                 }
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + league.league_id + "returned - " + l1.league_id);
+                logger.Trace("POST - DB connection by - " + league.league_id + " returned - " + l1.league_id);
 
                 if (l1 == null)
                 {
                     logger.Error("POST - League " + league.league_id + " does not exist in DB");
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
                 }
-                logger.Trace("Fetched league successfully - " + l1.league_id);
-                return Request.CreateResponse(HttpStatusCode.OK, l1);
-            }
 
+
+                List<Listed_in> players_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
+                logger.Error(players_in_league);
+
+                int?[] listing = new int?[40];
+                int counter = 0;
+                foreach (var item in players_in_league)
+                {
+                    listing[counter] = item.user_id;
+                    counter++;
+                }
+
+
+                logger.Trace("Fetched league successfully - " /*+ l1.league_id*/);
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    l1.league_id,
+                    l1.league_name,
+                    l1.league_picture,
+                    l1.league_rules,
+                    listing
+                },
+                JsonMediaTypeFormatter.DefaultMediaType);
+
+            }
             catch (Exception e)
             {
-                logger.Error("Bad Request, league id: " + league.league_id + e);
+                logger.Error("Bad Request, league id: " + league.league_id + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching League Data - Oops... Something went wrong");
             }
 
@@ -66,11 +89,12 @@ namespace WebAPI.Controllers
             try
             {
 
+
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + league.league_id + "returned - " + l1.league_id);
+                logger.Trace("POST - DB connection by - " + league.league_id + " returned - " + l1.league_id);
 
                 if (p1 == null || l1 == null)
                 {
@@ -90,16 +114,52 @@ namespace WebAPI.Controllers
                 logger.Trace("Adding user to league - " + ls.league_id + " user - " + ls.user_id);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, l1);
+                //// recive league_id, user_id. return new Fantasy Team
+                //Fantasy_team ft = new Fantasy_team()
+                //{
+                //    league_id = ls.league_id,
+                //    user_id = ls.user_id,
+                //    team_budget = 100
+                //};
+
+                //db.Fantasy_team.Add(ft);
+                logger.Trace("POST - DB connection by - " + league.league_id + " returned - " + l1.league_id);
+
+                if (l1 == null)
+                {
+                    logger.Error("POST - League " + league.league_id + " does not exist in DB");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
+                }
+
+
+                List<Listed_in> players_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
+                logger.Error(players_in_league);
+
+                int?[] listing = new int?[40];
+                int counter = 0;
+                foreach (var item in players_in_league)
+                {
+                    listing[counter] = item.user_id;
+                    counter++;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    l1.league_id,
+                    l1.league_name,
+                    l1.league_picture,
+                    l1.league_rules,
+                    listing
+                }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not add player: " + player.user_id + " | to league: " + league.league_id + ", " + e);
+                logger.Error("Bad Request, could not add player: " + player.user_id + " | to league: " + league.league_id + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
-        //POST: api/ManageLeague/5
+        //PUT: api/ManageLeague/5
         //Edit League Data
         //recive league_id, league_name, league_picture, league_rules. return league
         public HttpResponseMessage Put(JObject leagueData)
@@ -118,18 +178,28 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
                 }
 
-                l1.league_name = league.league_name;
-                l1.league_picture = league.league_picture;
-                l1.league_rules = league.league_rules;
-                db.League.Append(l1);
+                if (league.league_name != null)
+                {
+                    l1.league_name = league.league_name;
+                }
+                if (league.league_picture != null)
+                {
+                    l1.league_picture = league.league_picture;
+                }
+                if (league.league_rules != null)
+                {
+                    l1.league_rules = league.league_rules;
+                }
+
+                //db.League.Append(l1);
                 logger.Trace("Editing league - name: " + l1.league_name);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, l1);
+                return Request.CreateResponse(HttpStatusCode.OK, new { l1.league_id, l1.league_name, l1.league_picture, l1.league_rules }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not edit league: " + league.league_id + ", " + e);
+                logger.Error("Bad Request, could not edit league: " + league.league_id + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
@@ -137,17 +207,19 @@ namespace WebAPI.Controllers
 
         // DELETE: api/ManageLeague/5
         //Delete Player from League
-        //recive user_id. return ListedIn
+        //recive user_id, league_id. return ListedIn
         public HttpResponseMessage Delete(JObject leagueData)
         {
             logger.Trace("POST - ManageLeagueController - Delete player from league");
             Listed_in listed = JsonConvert.DeserializeObject<Listed_in>(leagueData.ToString());
+            League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
             try
             {
 
                 //Player player = JsonConvert.DeserializeObject<Player>(leagueData.ToString());
 
-                Listed_in ls = db.Listed_in.Where(p => p.user_id == listed.user_id).FirstOrDefault();
+                Listed_in ls = db.Listed_in.Where(p => p.user_id == listed.user_id && p.league_id == listed.league_id).FirstOrDefault();
+                League l1 = db.League.Where(l => l.league_id == listed.league_id).FirstOrDefault();
 
                 if (ls == null)
                 {
@@ -158,11 +230,29 @@ namespace WebAPI.Controllers
                 db.Listed_in.Remove(ls);
                 db.SaveChanges();
                 logger.Trace("User removed from league - name: " + ls.user_id);
-                return Request.CreateResponse(HttpStatusCode.OK, ls);
+                List<Listed_in> players_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
+                logger.Error(players_in_league);
+
+                int?[] listing = new int?[40];
+                int counter = 0;
+                foreach (var item in players_in_league)
+                {
+                    listing[counter] = item.user_id;
+                    counter++;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    l1.league_id,
+                    l1.league_name,
+                    l1.league_picture,
+                    l1.league_rules,
+                    listing
+                }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not Delete user: " + listed.user_id +", " + e);
+                logger.Error("Bad Request, could not Delete user: " + listed.user_id + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e); ;
             }
 

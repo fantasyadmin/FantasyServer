@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -31,7 +32,7 @@ namespace WebAPI.Controllers
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
                 p1.league_manager = true;
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
 
 
                 League l = new League()
@@ -46,7 +47,7 @@ namespace WebAPI.Controllers
                 db.Player.Append(p1);
                 db.SaveChanges();
                 db.League.Add(l);
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 Listed_in ls = new Listed_in()
                 {
@@ -62,11 +63,11 @@ namespace WebAPI.Controllers
                 db.SaveChanges();
                 logger.Trace("League created in DB for user - " + p1.user_id + " league - " + l.league_id);
 
-                return Request.CreateResponse(HttpStatusCode.OK, l);
+                return Request.CreateResponse(HttpStatusCode.OK, new { l.league_id, l.league_name, l.league_picture, l.league_rules }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not create league for player: " + player.user_id + " | league: " + league.league_id + ", " + e);
+                logger.Error("Bad Request, could not create league for player: " + player.user_id + " | league: " + league.league_id + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }

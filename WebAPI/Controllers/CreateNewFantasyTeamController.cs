@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -35,31 +36,39 @@ namespace WebAPI.Controllers
                 }
 
                 Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + player.user_id + "returned - " + p1.user_id);
+                logger.Trace("POST - DB connection by - " + player.user_id + " returned - " + p1.user_id);
+                League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+                logger.Trace("POST - DB connection by - " + league.league_id + " returned - " + l1.league_id);
 
                 if (p1 == null)
                 {
                     logger.Error("POST - Player " + player.nickname + " does not exist in DB");
                     return Request.CreateResponse(HttpStatusCode.BadRequest, $"Player with user id: {player.user_id} does not exist");
                 }
+                if (l1 == null)
+                {
+                    logger.Error("POST - League " + league.league_name + " does not exist in DB");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, $"League with league id: {league.league_id} does not exist");
+                }
 
                 Fantasy_team fs = new Fantasy_team()
                 {
                     user_id = player.user_id,
                     league_id = league.league_id,
-                    //team_budget = 100
+                    team_budget = 100,
+                    team_points = 0
                 };
 
-
                 db.Fantasy_team.Add(fs);
-                logger.Trace("Fantasy team added to DB for user - " + fs.user_id + "in league - " + fs.league_id);
+                logger.Trace("Fantasy team added to DB for user - " + fs.user_id + " in league - " + fs.league_id);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, p1);
+                return Request.CreateResponse(HttpStatusCode.OK, new { fs.user_id, fs.team_id, fs.league_id }, JsonMediaTypeFormatter.DefaultMediaType);
+
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not create team for player: " + player.user_id + " | league: " + league.league_id + ", " + e);
+                logger.Error("Bad Request, could not create team for player: " + player.user_id + " | league: " + league.league_id + "=======> " + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
 
