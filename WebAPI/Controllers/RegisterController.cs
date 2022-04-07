@@ -67,6 +67,7 @@ namespace WebAPI.Controllers
                     };
 
                     db.Listed_in.Add(ls);
+                    db.SaveChanges();
                     logger.Trace("POST - added player to existing league - " + league.league_id + " added user: - " + u.user_id);
                     Fantasy_team ft = new Fantasy_team()
                     {
@@ -75,6 +76,7 @@ namespace WebAPI.Controllers
                         team_budget = 100
                     };
                     db.Fantasy_team.Add(ft);
+                    db.SaveChanges();
                     logger.Trace("POST - added Fantasy-Team to League - " + league.league_id);
 
                 }
