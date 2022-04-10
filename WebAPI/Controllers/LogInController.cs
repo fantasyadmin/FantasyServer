@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, data received = " + user.email + " | =======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 

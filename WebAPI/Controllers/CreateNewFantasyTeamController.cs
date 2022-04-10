@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, could not create team for player: " + player.user_id + " | league: " + league.league_id + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
 
 

@@ -71,8 +71,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, league id: " + league.league_id + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching League Data - Oops... Something went wrong");
+                logger.Error("Bad Request, league id: " + league.league_id + "=======> " + e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
 
         }
@@ -155,7 +155,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, could not add player: " + player.user_id + " | to league: " + league.league_id + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -200,7 +200,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, could not edit league: " + league.league_id + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -253,7 +253,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, could not Delete user: " + listed.user_id + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e); ;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message); ;
             }
 
         }

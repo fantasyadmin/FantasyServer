@@ -63,12 +63,12 @@ namespace WebAPI.Controllers
                 db.SaveChanges();
                 logger.Trace("League created in DB for user - " + p1.user_id + " league - " + l.league_id);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { l.league_id, l.league_name, l.league_picture, l.league_rules }, JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.OK, new { l.league_id, l.league_name, l.league_picture, l.league_rules,  }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not create league for player: " + player.user_id + " | league: " + league.league_id + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+                logger.Error("Bad Request, could not create league for player: " + player.user_id + " | league: " + league.league_id + "=======> " + e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
