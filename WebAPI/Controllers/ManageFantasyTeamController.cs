@@ -42,62 +42,62 @@ namespace WebAPI.Controllers
 
         //receive fantasy team_id and user_id to buy
         //add player to team
-        // POST: api/ManageFantasyTeam
-        public HttpResponseMessage Post(JObject teamData)
-        {
-            logger.Trace("POST - ManageFantasyTeamController");
+         //POST: api/ManageFantasyTeam
+        //public HttpResponseMessage Post(JObject teamData)
+        //{
+        //    logger.Trace("POST - ManageFantasyTeamController");
 
-            //get the users fantasy team players
-            Fantasy_team fantasy_Team = JsonConvert.DeserializeObject<Fantasy_team>(teamData.ToString());
-            Fantasy_team_players fs = db.Fantasy_team_playersSet.Where(a => a.user_id == fantasy_Team.user_id).FirstOrDefault();
+        //    //get the users fantasy team players
+        //    Fantasy_team fantasy_Team = JsonConvert.DeserializeObject<Fantasy_team>(teamData.ToString());
+        //    Fantasy_team ft = db.Fantasy_team.Where(a => a.user_id == fantasy_Team.user_id).FirstOrDefault();
 
-            //Get the player that user wants to add to his team
-            Player player = JsonConvert.DeserializeObject<Player>(teamData.ToString());
-            Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
-            //Listed_in listed = db.Listed_in.Where(l => l.league_id == fs.league_id).FirstOrDefault();
+        //    //Get the player that user wants to add to his team
+        //    Player player = JsonConvert.DeserializeObject<Player>(teamData.ToString());
+        //    Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
+        //    //Listed_in listed = db.Listed_in.Where(l => l.league_id == fs.league_id).FirstOrDefault();
 
-            //look for user in fantasy team playesr
+        //    //look for user in fantasy team playesr
 
-            if (p1 != null)
-            {
+        //    if (p1 != null)
+        //    {
 
-                int?[] teamMates = new int?[] { fs.player1, fs.player2, fs.player3, fs.player4 };
+        //        int?[] teamMates = new int?[] { ft.player1, ft.player2, ft.player3, ft.player4 };
 
-                //prevent double purchase
-                foreach (var item in teamMates)
-                {
-                    if (item == p1.user_id)
-                    {
-                        logger.Error("POST - player already exists in team: " + p1);
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, "Player Already in team!");
-                    }
-                }
-                int count = 0;
-                foreach (var item in teamMates)
-                {
-                    if (item == null)
-                    {
-                        teamMates[count] = p1.user_id;
+        //        //prevent double purchase
+        //        foreach (var item in teamMates)
+        //        {
+        //            if (item == p1.user_id)
+        //            {
+        //                logger.Error("POST - player already exists in team: " + p1);
+        //                return Request.CreateResponse(HttpStatusCode.BadRequest, "Player Already in team!");
+        //            }
+        //        }
+        //        int count = 0;
+        //        foreach (var item in teamMates)
+        //        {
+        //            if (item == null)
+        //            {
+        //                teamMates[count] = p1.user_id;
 
-                        //fs.player1 = teamMates[0];
-                        //fs.player2 = teamMates[1];
-                        //fs.player3 = teamMates[2];
-                        //fs.player4 = teamMates[3];
+        //                //fs.player1 = teamMates[0];
+        //                //fs.player2 = teamMates[1];
+        //                //fs.player3 = teamMates[2];
+        //                //fs.player4 = teamMates[3];
 
-                        db.SaveChanges();
+        //                db.SaveChanges();
 
-                        logger.Error("POST - player added to team: " + fs);
-                        return Request.CreateResponse(HttpStatusCode.OK, new { fs.league_id, fs.user_id, fs.nickname, fs.team_id, fs.player1, fs.player2, fs.player3, fs.player4 }, JsonMediaTypeFormatter.DefaultMediaType);
-                    }
-                    count++;
-                }
-                logger.Error("POST - not enough room for player in team: " + fs);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Not Enough room in team to buy player, sell a player and try again");
-            }
+        //                logger.Error("POST - player added to team: " + fs);
+        //                return Request.CreateResponse(HttpStatusCode.OK, new { fs.league_id, fs.user_id, fs.nickname, fs.team_id, fs.player1, fs.player2, fs.player3, fs.player4 }, JsonMediaTypeFormatter.DefaultMediaType);
+        //            }
+        //            count++;
+        //        }
+        //        logger.Error("POST - not enough room for player in team: " + fs);
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, "Not Enough room in team to buy player, sell a player and try again");
+        //    }
 
-            return Request.CreateResponse(HttpStatusCode.NotFound, "Something went wront");
+        //    return Request.CreateResponse(HttpStatusCode.NotFound, "Something went wront");
 
-        }
+        //}
 
         // PUT: api/ManageFantasyTeam/5
         public void Put(int id, [FromBody] string value)
