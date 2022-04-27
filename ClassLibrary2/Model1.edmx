@@ -27,24 +27,13 @@
           <Key>
             <PropertyRef Name="team_id" />
             <PropertyRef Name="league_id" />
+            <PropertyRef Name="user_id" />
           </Key>
           <Property Name="team_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="team_budget" Type="int" Nullable="false" />
           <Property Name="league_id" Type="int" Nullable="false" />
-          <Property Name="user_id" Type="int" />
-          <Property Name="team_points" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Fantasy_team_players">
-          <Key>
-            <PropertyRef Name="nickname" />
-            <PropertyRef Name="user_id" />
-            <PropertyRef Name="team_id" />
-            <PropertyRef Name="league_id" />
-          </Key>
-          <Property Name="nickname" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="team_id" Type="int" Nullable="false" />
-          <Property Name="league_id" Type="int" Nullable="false" />
+          <Property Name="team_points" Type="int" Nullable="false" />
           <Property Name="player1" Type="int" />
           <Property Name="player2" Type="int" />
           <Property Name="player3" Type="int" />
@@ -113,6 +102,16 @@
           <Property Name="pen_missed_minus_pts" Type="int" Nullable="false" />
           <Property Name="goals_recieved_minus_pts" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="user_id" />
@@ -159,36 +158,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_fantasy_team_players_Fantasy_team">
-          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="1" />
-          <End Role="Fantasy_team_players" Type="Self.Fantasy_team_players" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Fantasy_team">
-              <PropertyRef Name="team_id" />
-              <PropertyRef Name="league_id" />
-            </Principal>
-            <Dependent Role="Fantasy_team_players">
-              <PropertyRef Name="team_id" />
-              <PropertyRef Name="league_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fantasy_team_players_Player1">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Fantasy_team_players" Type="Self.Fantasy_team_players" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="nickname" />
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="Fantasy_team_players">
-              <PropertyRef Name="nickname" />
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Fantasy_team_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -252,12 +223,12 @@
         <EntityContainer Name="bgroup89_prodModelStoreContainer">
           <EntitySet Name="Active_in" EntityType="Self.Active_in" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fantasy_team" EntityType="Self.Fantasy_team" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Fantasy_team_players" EntityType="Self.Fantasy_team_players" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Listed_in" EntityType="Self.Listed_in" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Smart_calc" EntityType="Self.Smart_calc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Active_in_Match1" Association="Self.FK_Active_in_Match1">
             <End Role="Match" EntitySet="Match" />
@@ -270,14 +241,6 @@
           <AssociationSet Name="FK_Fantasy_team_League" Association="Self.FK_Fantasy_team_League">
             <End Role="League" EntitySet="League" />
             <End Role="Fantasy_team" EntitySet="Fantasy_team" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fantasy_team_players_Fantasy_team" Association="Self.FK_fantasy_team_players_Fantasy_team">
-            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
-            <End Role="Fantasy_team_players" EntitySet="Fantasy_team_players" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fantasy_team_players_Player1" Association="Self.FK_fantasy_team_players_Player1">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Fantasy_team_players" EntitySet="Fantasy_team_players" />
           </AssociationSet>
           <AssociationSet Name="FK_Fantasy_team_User" Association="Self.FK_Fantasy_team_User">
             <End Role="User" EntitySet="User" />
@@ -329,33 +292,19 @@
           <Key>
             <PropertyRef Name="team_id" />
             <PropertyRef Name="league_id" />
+            <PropertyRef Name="user_id" />
           </Key>
           <Property Name="team_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="team_budget" Type="Int32" Nullable="false" />
           <Property Name="league_id" Type="Int32" Nullable="false" />
-          <Property Name="user_id" Type="Int32" />
-          <Property Name="team_points" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="League" Relationship="Self.FK_Fantasy_team_League" FromRole="Fantasy_team" ToRole="League" />
-          <NavigationProperty Name="Fantasy_team_players" Relationship="Self.FK_fantasy_team_players_Fantasy_team" FromRole="Fantasy_team" ToRole="Fantasy_team_players" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Fantasy_team_User" FromRole="Fantasy_team" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Fantasy_team_players">
-          <Key>
-            <PropertyRef Name="nickname" />
-            <PropertyRef Name="user_id" />
-            <PropertyRef Name="team_id" />
-            <PropertyRef Name="league_id" />
-          </Key>
-          <Property Name="nickname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="team_id" Type="Int32" Nullable="false" />
-          <Property Name="league_id" Type="Int32" Nullable="false" />
+          <Property Name="team_points" Type="Int32" Nullable="false" />
           <Property Name="player1" Type="Int32" />
           <Property Name="player2" Type="Int32" />
           <Property Name="player3" Type="Int32" />
           <Property Name="player4" Type="Int32" />
-          <NavigationProperty Name="Fantasy_team" Relationship="Self.FK_fantasy_team_players_Fantasy_team" FromRole="Fantasy_team_players" ToRole="Fantasy_team" />
-          <NavigationProperty Name="Player" Relationship="Self.FK_fantasy_team_players_Player1" FromRole="Fantasy_team_players" ToRole="Player" />
+          <NavigationProperty Name="League" Relationship="Self.FK_Fantasy_team_League" FromRole="Fantasy_team" ToRole="League" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Fantasy_team_User" FromRole="Fantasy_team" ToRole="User" />
         </EntityType>
         <EntityType Name="League">
           <Key>
@@ -415,7 +364,6 @@
           <Property Name="total_pen_missed" Type="Int32" Nullable="false" />
           <Property Name="total_goals_recieved" Type="Int32" Nullable="false" />
           <Property Name="league_manager" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Fantasy_team_players" Relationship="Self.FK_fantasy_team_players_Player1" FromRole="Player" ToRole="Fantasy_team_players" />
           <NavigationProperty Name="Listed_in" Relationship="Self.FK_Listed_in_Player" FromRole="Player" ToRole="Listed_in" />
           <NavigationProperty Name="User" Relationship="Self.FK_Player_User" FromRole="Player" ToRole="User" />
         </EntityType>
@@ -429,6 +377,16 @@
           <Property Name="assists_pts" Type="Int32" Nullable="false" />
           <Property Name="pen_missed_minus_pts" Type="Int32" Nullable="false" />
           <Property Name="goals_recieved_minus_pts" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -479,42 +437,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_fantasy_team_players_Fantasy_team">
-          <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="1" />
-          <End Role="Fantasy_team_players" Type="Self.Fantasy_team_players" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Fantasy_team">
-              <PropertyRef Name="team_id" />
-              <PropertyRef Name="league_id" />
-            </Principal>
-            <Dependent Role="Fantasy_team_players">
-              <PropertyRef Name="team_id" />
-              <PropertyRef Name="league_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Fantasy_team_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Fantasy_team" Type="Self.Fantasy_team" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="user_id" />
             </Principal>
             <Dependent Role="Fantasy_team">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_fantasy_team_players_Player1">
-          <End Role="Player" Type="Self.Player" Multiplicity="1" />
-          <End Role="Fantasy_team_players" Type="Self.Fantasy_team_players" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Player">
-              <PropertyRef Name="nickname" />
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="Fantasy_team_players">
-              <PropertyRef Name="nickname" />
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -569,15 +499,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="bgroup89_prodEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="bgroup89_prodEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Active_in" EntityType="Self.Active_in" />
           <EntitySet Name="Fantasy_team" EntityType="Self.Fantasy_team" />
-          <EntitySet Name="Fantasy_team_players" EntityType="Self.Fantasy_team_players" />
           <EntitySet Name="League" EntityType="Self.League" />
           <EntitySet Name="Listed_in" EntityType="Self.Listed_in" />
           <EntitySet Name="Match" EntityType="Self.Match" />
           <EntitySet Name="Player" EntityType="Self.Player" />
           <EntitySet Name="Smart_calc" EntityType="Self.Smart_calc" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="User" EntityType="Self.User" />
           <AssociationSet Name="FK_Active_in_Match1" Association="Self.FK_Active_in_Match1">
             <End Role="Match" EntitySet="Match" />
@@ -591,17 +521,9 @@
             <End Role="League" EntitySet="League" />
             <End Role="Fantasy_team" EntitySet="Fantasy_team" />
           </AssociationSet>
-          <AssociationSet Name="FK_fantasy_team_players_Fantasy_team" Association="Self.FK_fantasy_team_players_Fantasy_team">
-            <End Role="Fantasy_team" EntitySet="Fantasy_team" />
-            <End Role="Fantasy_team_players" EntitySet="Fantasy_team_players" />
-          </AssociationSet>
           <AssociationSet Name="FK_Fantasy_team_User" Association="Self.FK_Fantasy_team_User">
             <End Role="User" EntitySet="User" />
             <End Role="Fantasy_team" EntitySet="Fantasy_team" />
-          </AssociationSet>
-          <AssociationSet Name="FK_fantasy_team_players_Player1" Association="Self.FK_fantasy_team_players_Player1">
-            <End Role="Player" EntitySet="Player" />
-            <End Role="Fantasy_team_players" EntitySet="Fantasy_team_players" />
           </AssociationSet>
           <AssociationSet Name="FK_league_id" Association="Self.FK_league_id">
             <End Role="League" EntitySet="League" />
@@ -625,7 +547,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bgroup89_prodModelStoreContainer" CdmEntityContainer="bgroup89_prodEntities2">
+        <EntityContainerMapping StorageEntityContainer="bgroup89_prodModelStoreContainer" CdmEntityContainer="bgroup89_prodEntities">
           <EntitySetMapping Name="Active_in">
             <EntityTypeMapping TypeName="bgroup89_prodModel.Active_in">
               <MappingFragment StoreEntitySet="Active_in">
@@ -651,16 +573,6 @@
                 <ScalarProperty Name="league_id" ColumnName="league_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="team_points" ColumnName="team_points" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fantasy_team_players">
-            <EntityTypeMapping TypeName="bgroup89_prodModel.Fantasy_team_players">
-              <MappingFragment StoreEntitySet="Fantasy_team_players">
-                <ScalarProperty Name="nickname" ColumnName="nickname" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="team_id" ColumnName="team_id" />
-                <ScalarProperty Name="league_id" ColumnName="league_id" />
                 <ScalarProperty Name="player1" ColumnName="player1" />
                 <ScalarProperty Name="player2" ColumnName="player2" />
                 <ScalarProperty Name="player3" ColumnName="player3" />
@@ -729,6 +641,17 @@
                 <ScalarProperty Name="assists_pts" ColumnName="assists_pts" />
                 <ScalarProperty Name="pen_missed_minus_pts" ColumnName="pen_missed_minus_pts" />
                 <ScalarProperty Name="goals_recieved_minus_pts" ColumnName="goals_recieved_minus_pts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="bgroup89_prodModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

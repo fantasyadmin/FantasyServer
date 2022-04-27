@@ -14,21 +14,17 @@ namespace ClassLibrary2
     
     public partial class Fantasy_team
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Fantasy_team()
-        {
-            this.Fantasy_team_players = new HashSet<Fantasy_team_players>();
-        }
-    
         public int team_id { get; set; }
         public int team_budget { get; set; }
         public int league_id { get; set; }
-        public Nullable<int> user_id { get; set; }
+        public int user_id { get; set; }
         public int team_points { get; set; }
+        public Nullable<int> player1 { get; set; }
+        public Nullable<int> player2 { get; set; }
+        public Nullable<int> player3 { get; set; }
+        public Nullable<int> player4 { get; set; }
     
         public virtual League League { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fantasy_team_players> Fantasy_team_players { get; set; }
         public virtual User User { get; set; }
     }
 }

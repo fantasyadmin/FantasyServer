@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        bgroup89_prodEntities2 db = new bgroup89_prodEntities2();
+        bgroup89_prodEntities db = new bgroup89_prodEntities();
 
         // POST: api/Register
         //Recieve userName, email, Password, existing league id number
@@ -28,17 +28,19 @@ namespace WebAPI.Controllers
 
             //Converting userData to User
             User user = JsonConvert.DeserializeObject<User>(userData.ToString());
-            User u = new User() { email = user.email, password = user.password };
 
             Player player = JsonConvert.DeserializeObject<Player>(userData.ToString());
-            Player p = new Player() { nickname = player.nickname, user_id = u.user_id };
-
+            
             League league = JsonConvert.DeserializeObject<League>(userData.ToString());
+
+
+
+            User u = new User() { email = user.email, password = user.password };
+
 
 
             try
             {
-
                 if (user == null || player == null)
                 {
                     logger.Error("POST - Empty reference - user: " + user + " | player: " + player);
@@ -53,6 +55,21 @@ namespace WebAPI.Controllers
                     logger.Error("POST - Occupied Value in - user: " + u1);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Email already exist");
                 }
+
+                db.User.Add(u);
+                logger.Trace("User added to DB" + u.email);
+                db.SaveChanges();
+
+                User u2 = db.User.Where(a => a.email == user.email).FirstOrDefault();
+                Player p = new Player() { nickname = player.nickname, user_id = u2.user_id};
+
+
+                db.Player.Add(p);
+                logger.Trace("Player added to DB" + p.nickname);
+                db.SaveChanges();
+                logger.Trace("Changes Saved to DB - SUCCESS!");
+
+
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
 
@@ -89,21 +106,13 @@ namespace WebAPI.Controllers
                     //============================================================================================
                 }
 
-
-                db.User.Add(u);
-                logger.Trace("User added to DB" + u.email);
-                db.Player.Add(p);
-                logger.Trace("Player added to DB" + p.nickname);
-                db.SaveChanges();
-                logger.Trace("Changes Saved to DB - SUCCESS!");
-
                 return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
 
                 //return Request.CreateResponse(HttpStatusCode.OK, u.user_id);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, data received = user: " + u + " | player: " + p + "=======> " + e);
+                logger.Error("Bad Request, data received = user: " + u + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException);
             }
         }

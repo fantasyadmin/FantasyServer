@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        bgroup89_prodEntities2 db = new bgroup89_prodEntities2();
+        bgroup89_prodEntities db = new bgroup89_prodEntities();
 
 
         // GET: api/ManageFantasyTeam/5

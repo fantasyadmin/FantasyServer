@@ -17,7 +17,6 @@ namespace ClassLibrary2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Player()
         {
-            this.Fantasy_team_players = new HashSet<Fantasy_team_players>();
             this.Listed_in = new HashSet<Listed_in>();
         }
     
@@ -33,8 +32,6 @@ namespace ClassLibrary2
         public int total_goals_recieved { get; set; }
         public bool league_manager { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fantasy_team_players> Fantasy_team_players { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Listed_in> Listed_in { get; set; }
         public virtual User User { get; set; }

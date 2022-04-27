@@ -13,10 +13,10 @@ namespace ClassLibrary2
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class bgroup89_prodEntities2 : DbContext
+    public partial class bgroup89_prodEntities : DbContext
     {
-        public bgroup89_prodEntities2()
-            : base("name=bgroup89_prodEntities2")
+        public bgroup89_prodEntities()
+            : base("name=bgroup89_prodEntities")
         {
         }
     
@@ -27,12 +27,12 @@ namespace ClassLibrary2
     
         public virtual DbSet<Active_in> Active_in { get; set; }
         public virtual DbSet<Fantasy_team> Fantasy_team { get; set; }
-        public virtual DbSet<Fantasy_team_players> Fantasy_team_players { get; set; }
         public virtual DbSet<League> League { get; set; }
         public virtual DbSet<Listed_in> Listed_in { get; set; }
         public virtual DbSet<Match> Match { get; set; }
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<Smart_calc> Smart_calc { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

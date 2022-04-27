@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
 
-        bgroup89_prodEntities2 db = new bgroup89_prodEntities2();
+        bgroup89_prodEntities db = new bgroup89_prodEntities();
 
         // Get: api/EditPlayer/5
         //Recive user_id, picture, nickname. return player
