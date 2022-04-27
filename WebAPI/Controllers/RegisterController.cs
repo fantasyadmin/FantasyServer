@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        bgroup89_test2Entities db = new bgroup89_test2Entities();
+        bgroup89_prodEntities2 db = new bgroup89_prodEntities2();
 
         // POST: api/Register
         //Recieve userName, email, Password, existing league id number
@@ -78,9 +78,16 @@ namespace WebAPI.Controllers
                     db.Fantasy_team.Add(ft);
                     db.SaveChanges();
                     logger.Trace("POST - added Fantasy-Team to League - " + league.league_id);
-
                 }
+                else
+                {
+                    //============================================================================================
 
+
+                  //create new league -> create new listed in -> register the user to this new league  
+
+                    //============================================================================================
+                }
 
 
                 db.User.Add(u);
@@ -97,7 +104,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, data received = user: " + u + " | player: " + p + "=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException);
             }
         }
 

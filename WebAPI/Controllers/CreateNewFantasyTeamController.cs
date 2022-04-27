@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
     public class CreateNewFantasyTeamController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        bgroup89_test2Entities db = new bgroup89_test2Entities();
+        bgroup89_prodEntities2 db = new bgroup89_prodEntities2();
 
 
         // POST: api/CreateNewFantasyTeam

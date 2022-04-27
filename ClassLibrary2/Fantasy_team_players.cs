@@ -12,14 +12,18 @@ namespace ClassLibrary2
     using System;
     using System.Collections.Generic;
     
-    public partial class Listed_in
+    public partial class Fantasy_team_players
     {
-        public int user_id { get; set; }
         public string nickname { get; set; }
+        public int user_id { get; set; }
+        public int team_id { get; set; }
         public int league_id { get; set; }
-        public System.DateTime registration_date { get; set; }
+        public Nullable<int> player1 { get; set; }
+        public Nullable<int> player2 { get; set; }
+        public Nullable<int> player3 { get; set; }
+        public Nullable<int> player4 { get; set; }
     
-        public virtual League League { get; set; }
+        public virtual Fantasy_team Fantasy_team { get; set; }
         public virtual Player Player { get; set; }
     }
 }
