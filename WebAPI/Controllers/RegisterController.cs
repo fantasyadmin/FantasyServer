@@ -34,11 +34,6 @@ namespace WebAPI.Controllers
             League league = JsonConvert.DeserializeObject<League>(userData.ToString());
 
 
-
-            User u = new User() { email = user.email, password = user.password };
-
-
-
             try
             {
                 if (user == null || player == null)
@@ -48,7 +43,7 @@ namespace WebAPI.Controllers
                 }
 
                 User u1 = db.User.Where(a => a.email == user.email).FirstOrDefault();
-                logger.Trace("POST - DB connection by - " + user.email + " returned - " + u.email);
+                logger.Trace("POST - DB connection by - " + user.email);
 
                 if (u1 != null)
                 {
@@ -56,25 +51,26 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Email already exist");
                 }
 
+                User u = new User() { email = user.email, password = user.password };
+
                 db.User.Add(u);
                 logger.Trace("User added to DB" + u.email);
                 db.SaveChanges();
 
-                User u2 = db.User.Where(a => a.email == user.email).FirstOrDefault();
-                Player p = new Player() { nickname = player.nickname, user_id = u2.user_id};
-
-
-                db.Player.Add(p);
-                logger.Trace("Player added to DB" + p.nickname);
-                db.SaveChanges();
-                logger.Trace("Changes Saved to DB - SUCCESS!");
-
+                //User u2 = db.User.Where(a => a.email == user.email).FirstOrDefault();
 
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
 
                 if (l1 != null)
                 {
+                    Player p = new Player() { nickname = player.nickname, user_id = u.user_id };
+
+                    db.Player.Add(p);
+                    logger.Trace("Player added to DB" + p.nickname);
+                    db.SaveChanges();
+                    logger.Trace("Changes Saved to DB - SUCCESS!");
+
                     Listed_in ls = new Listed_in()
                     {
                         league_id = l1.league_id,
@@ -95,25 +91,53 @@ namespace WebAPI.Controllers
                     db.Fantasy_team.Add(ft);
                     db.SaveChanges();
                     logger.Trace("POST - added Fantasy-Team to League - " + league.league_id);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
+
                 }
                 else
                 {
                     //============================================================================================
+                    Player p = new Player() { nickname = player.nickname, user_id = u.user_id, league_manager=true };
 
+                    db.Player.Add(p);
+                    logger.Trace("Player added to DB" + p.nickname);
+                    db.SaveChanges();
+                    logger.Trace("Changes Saved to DB - SUCCESS!");
 
-                  //create new league -> create new listed in -> register the user to this new league  
+                    League l = new League()
+                    {
+                        league_name = "",
+                        invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705"
+                    };
 
-                    //============================================================================================
+                    db.League.Add(l);
+                    db.SaveChanges();
+                    logger.Trace("POST - Created new (Generic) League - " + league.league_id);
+
+                    Listed_in ls1 = new Listed_in()
+                    {
+                        league_id = l.league_id,
+                        user_id = p.user_id,
+                        nickname = p.nickname,
+                        registration_date = DateTime.Now
+                    };
+
+                    db.Listed_in.Add(ls1);
+                    db.SaveChanges();
+                    logger.Trace("POST - added player to existing league - " + league.league_id + " added user: - " + u.user_id);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
+
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
 
                 //return Request.CreateResponse(HttpStatusCode.OK, u.user_id);
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, data received = user: " + u + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException);
+                logger.Error("Bad Request, data received = user: "+ user + e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest,"Error" + e.InnerException);
             }
         }
 
