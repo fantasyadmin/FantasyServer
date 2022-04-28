@@ -127,6 +127,16 @@ namespace WebAPI.Controllers
                     db.SaveChanges();
                     logger.Trace("POST - added player to existing league - " + league.league_id + " added user: - " + u.user_id);
 
+                    Fantasy_team ft1 = new Fantasy_team()
+                    {
+                        user_id = p.user_id,
+                        league_id = l.league_id,
+                        team_budget = 100
+                    };
+                    db.Fantasy_team.Add(ft1);
+                    db.SaveChanges();
+                    logger.Trace("POST - added Fantasy-Team to League - " + l.league_id);
+
                     return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
 
                 }

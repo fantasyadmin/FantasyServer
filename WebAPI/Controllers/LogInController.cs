@@ -41,6 +41,7 @@ namespace WebAPI.Controllers
                     Player p1 = db.Player.Where(p => p.user_id == u1.user_id).FirstOrDefault();
                     Listed_in ls1 = db.Listed_in.Where(ls => ls.user_id == p1.user_id).FirstOrDefault();
                     League l1 = db.League.Where(l => l.league_id == ls1.league_id).FirstOrDefault();
+                    Fantasy_team fs = db.Fantasy_team.Where(f => f.league_id == l1.league_id && f.user_id == p1.user_id).FirstOrDefault();
 
                     List<Listed_in> usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
                     logger.Error(usres_in_league);
@@ -87,7 +88,15 @@ namespace WebAPI.Controllers
                         l1.league_id,
                         l1.league_name,
                         l1.league_picture,
-                        l1.league_rules 
+                        l1.league_rules, 
+                        //Fantasy Team
+                        fs.player1,
+                        fs.player2,
+                        fs.player3,
+                        fs.player4,
+                        fs.team_budget,
+                        fs.team_id,
+                        fs.team_points
 
                     }, JsonMediaTypeFormatter.DefaultMediaType);
                 }
