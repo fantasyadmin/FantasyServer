@@ -14,6 +14,8 @@ namespace WebAPI.Controllers
 {
     public class ManageFantasyTeamController : ApiController
     {
+        const int teamSize = 4;
+
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         bgroup89_prodEntities db = new bgroup89_prodEntities();
@@ -36,7 +38,42 @@ namespace WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Team not found");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, new { fs.league_id, fs.team_id, fs.user_id, fs.team_budget, fs.team_points }, JsonMediaTypeFormatter.DefaultMediaType);
+            //Player player1 = db.Player.Where(p => p.user_id == fs.player1).FirstOrDefault();
+            //Player player2 = db.Player.Where(p => p.user_id == fs.player2).FirstOrDefault();
+            //Player player3 = db.Player.Where(p => p.user_id == fs.player3).FirstOrDefault();
+            //Player player4 = db.Player.Where(p => p.user_id == fs.player4).FirstOrDefault();
+
+
+
+            //fs.team_points = player1.player_score + player2.player_score + player3.player_score + player4.player_score;
+
+            //List<Player> players_in_team = db.Player.Where(x => x.user_id == player1.user_id || x.user_id == player2.user_id || x.user_id == player3.user_id || x.user_id == player4.user_id).ToList();
+            //logger.Error(players_in_team);
+
+            //Player[] ftPlayers = new Player[teamSize];
+            //int counter = 0;
+
+            //foreach (var item in players_in_team)
+            //{
+            //    ftPlayers[counter] = item;
+            //    counter++;
+            //}
+
+            return Request.CreateResponse(HttpStatusCode.OK, new 
+            {
+                //team details
+                fs.league_id,
+                fs.team_id,
+                fs.user_id,
+                fs.team_budget,
+                fs.team_points,
+                //players in team details
+                fs.player1,
+                fs.player2,
+                fs.player3,
+                fs.player4
+
+            }, JsonMediaTypeFormatter.DefaultMediaType);
         }
 
 

@@ -30,9 +30,6 @@ namespace WebAPI.Controllers
             {
                 //find the user
                 User u1 = db.User.Where(u => u.email == user.email).FirstOrDefault();
-                //u.Fantasy_team = null;
-
-
 
                 if (u1.email != null && u1.password != null && u1.password == user.password)
                 {
