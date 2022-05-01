@@ -53,20 +53,26 @@ namespace WebAPI.Controllers
                         counter_u++;
                     }
 
-                    List<Player> players_in_league = db.Player.Where(x => x.user_id == p1.user_id).ToList();
-                    logger.Error(players_in_league);
+                    Player player1 = db.Player.Where(p => p.user_id == fs.player1).FirstOrDefault();
+                    Player player2 = db.Player.Where(p => p.user_id == fs.player2).FirstOrDefault();
+                    Player player3 = db.Player.Where(p => p.user_id == fs.player3).FirstOrDefault();
+                    Player player4 = db.Player.Where(p => p.user_id == fs.player4).FirstOrDefault();
 
-                    Player[] listing_player = new Player[usres_in_league.Count];
-                    int counter_p = 0;
 
-                    foreach (var item in players_in_league)
-                    {
-                        listing_player[counter_p] = item;
-                        counter_p++;
-                    }
+                    //List<Player> players_in_league = db.Player.Where(x => x.user_id == p1.user_id).ToList();
+                    //logger.Error(players_in_league);
+
+                    //Player[] listing_player = new Player[usres_in_league.Count];
+                    //int counter_p = 0;
+
+                    //foreach (var item in players_in_league)
+                    //{
+                    //    listing_player[counter_p] = JsonConvert.DeserializeObject<Player>(item.ToString()); 
+                    //    counter_p++;
+                    //}
 
                     return Request.CreateResponse(HttpStatusCode.OK, new 
-                    { 
+                    {
                         //user
                         u1.user_id,
                         //player
@@ -85,7 +91,7 @@ namespace WebAPI.Controllers
                         l1.league_id,
                         l1.league_name,
                         l1.league_picture,
-                        l1.league_rules, 
+                        l1.league_rules,
                         //Fantasy Team
                         fs.player1,
                         fs.player2,
