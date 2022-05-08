@@ -59,17 +59,6 @@ namespace WebAPI.Controllers
                     Player player4 = db.Player.Where(p => p.user_id == fs.player4).FirstOrDefault();
 
 
-                    //List<Player> players_in_league = db.Player.Where(x => x.user_id == p1.user_id).ToList();
-                    //logger.Error(players_in_league);
-
-                    //Player[] listing_player = new Player[usres_in_league.Count];
-                    //int counter_p = 0;
-
-                    //foreach (var item in players_in_league)
-                    //{
-                    //    listing_player[counter_p] = JsonConvert.DeserializeObject<Player>(item.ToString()); 
-                    //    counter_p++;
-                    //}
 
                     return Request.CreateResponse(HttpStatusCode.OK, new 
                     {
@@ -100,7 +89,6 @@ namespace WebAPI.Controllers
                         fs.team_budget,
                         fs.team_id,
                         fs.team_points
-
                     }, JsonMediaTypeFormatter.DefaultMediaType);
                 }
 

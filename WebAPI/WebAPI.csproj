@@ -179,11 +179,13 @@
     <Compile Include="Controllers\CreateNewFantasyTeamController.cs" />
     <Compile Include="Controllers\CreateNewLeagueController.cs" />
     <Compile Include="Controllers\EditPlayerController.cs" />
-    <Compile Include="Controllers\FantasyTeamPlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ManageFantasyTeamController.cs" />
     <Compile Include="Controllers\ManageLeagueController.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="Controllers\PlayersInLeagueController.cs" />
+    <Compile Include="Controllers\PlayersInTeamController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

@@ -147,81 +147,80 @@ namespace WebAPI.Controllers
         }
 
         // PUT: api/ManageFantasyTeam/5
-        public HttpResponseMessage Put(JObject teamData)
-        {
-            try
-            {
-                Fantasy_team fantasy_Team = JsonConvert.DeserializeObject<Fantasy_team>(teamData.ToString());
-                Player player = JsonConvert.DeserializeObject<Player>(teamData.ToString());
+        // remove playr from fantasy team
+        //recive user_id, team_id .  return team data
+        //public HttpResponseMessage Put(JObject teamData)
+        //{
+        //    try
+        //    {
+        //        Fantasy_team fantasy_Team = JsonConvert.DeserializeObject<Fantasy_team>(teamData.ToString());
+        //        Player player = JsonConvert.DeserializeObject<Player>(teamData.ToString());
 
-                Fantasy_team ft = db.Fantasy_team.Where(a => a.team_id == fantasy_Team.team_id).FirstOrDefault();
+        //        Fantasy_team ft = db.Fantasy_team.Where(a => a.team_id == fantasy_Team.team_id).FirstOrDefault();
 
-                if (ft == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Team {fantasy_Team.team_id} does not exist in DB");
-                }
+        //        if (ft == null)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.NotFound, $"Team {fantasy_Team.team_id} does not exist in DB");
+        //        }
 
-                Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
+        //        Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
 
-                if (p1 == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Player {player.user_id} does not exist in DB");
-                }
+        //        if (p1 == null)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.NotFound, $"Player {player.user_id} does not exist in DB");
+        //        }
 
-                int?[] players_in_team = new int?[4];
+        //        int?[] players_in_team = new int?[4];
 
-                players_in_team[1] = ft.player1;
-                players_in_team[2] = ft.player2;
-                players_in_team[3] = ft.player3;
-                players_in_team[4] = ft.player4;
+        //        players_in_team[1] = ft.player1;
+        //        players_in_team[2] = ft.player2;
+        //        players_in_team[3] = ft.player3;
+        //        players_in_team[4] = ft.player4;
 
-                int count = 1;
+        //        for (int i = 1; i <= players_in_team.Length; i++)
+        //        {
+        //            if (players_in_team[i] == p1.user_id)
+        //            {
+        //                switch (i)
+        //                {
+        //                    case 1:
+        //                        ft.player1 = null;
+        //                        break;
+        //                    case 2:
+        //                        ft.player2 = null;
+        //                        break;
+        //                    case 3:
+        //                        ft.player3 = null;
+        //                        break;
+        //                    case 4:
+        //                        ft.player4 = null;
+        //                        break;
+        //                }
+        //            }
+        //        }
 
-                foreach (var item in players_in_team)
-                {
-                    if (item == p1.user_id)
-                    {
-                        switch (count)
-                        {
-                            case 1:
-                                ft.player1 = null;
-                                break;
-                            case 2:
-                                ft.player2 = null;
-                                break;
-                            case 3:
-                                ft.player3 = null;
-                                break;
-                            case 4:
-                                ft.player4 = null;
-                                break;
-                        }
-                    }
-                    count++;
-                }
+        //        db.Fantasy_team.Append(ft);
 
-                db.SaveChanges();
+        //        logger.Error($"POST - player {p1} removed from team: " + ft);
+        //        return Request.CreateResponse(HttpStatusCode.OK, new
+        //        {
+        //            ft.league_id,
+        //            ft.user_id,
+        //            ft.team_id,
+        //            ft.team_points,
+        //            ft.player1,
+        //            ft.player2,
+        //            ft.player3,
+        //            ft.player4
+        //        }, JsonMediaTypeFormatter.DefaultMediaType);
 
-                logger.Error($"POST - player {p1} removed from team: " + ft);
-                return Request.CreateResponse(HttpStatusCode.OK, new 
-                {
-                    ft.league_id,
-                    ft.user_id,
-                    ft.team_id,
-                    ft.team_points,
-                    ft.player1,
-                    ft.player2,
-                    ft.player3,
-                    ft.player4
-                }, JsonMediaTypeFormatter.DefaultMediaType);
-
-            }
-            catch (Exception e)
-            {
-                logger.Error($"Bad Request, could not Delete player: {JsonConvert.DeserializeObject<Fantasy_team>(teamData.ToString()).user_id}=======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException); ; ;
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        logger.Error($"Bad Request, could not Delete player: {JsonConvert.DeserializeObject<Fantasy_team>(teamData.ToString()).user_id}=======> " + e);
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException); ; ;
+        //    }
+        //}
 
         // DELETE: api/ManageFantasyTeam/5
         public void Delete(int id)
