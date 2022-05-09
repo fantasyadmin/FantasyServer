@@ -37,28 +37,41 @@ namespace WebAPI.Controllers
         //{
         //    logger.Trace("POST - MatchController");
         //    //Converting userData to User
-        //    try
+        //    //try
+        //    // {
+        //    Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
+        //    League league = JsonConvert.DeserializeObject<League>(matchData.ToString());
+
+        //    League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+        //    if (l1 == null)
         //    {
-        //        Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
-        //        League league = JsonConvert.DeserializeObject<League>(matchData.ToString());
+        //        return Request.CreateResponse(HttpStatusCode.NotFound, $"League {league.league_id} not found");
+        //    }
 
-        //        League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
-        //        if (l1 == null)
-        //        {
-        //            return Request.CreateResponse(HttpStatusCode.NotFound, $"League {league.league_id} not found");
-        //        }
+        //    string strhDate = matchData["match_date"].ToString(); //Convert.ToDateTime(match.match_date);
+        //    string strTime = matchData["match_time"].ToString();
+        //    var strLocation = string.Format("POINT({0})", matchData["location"].ToString());
 
-        //        Match m1 = new Match()
+        //    DateTime matchDate = DateTime.Parse(strhDate);
+        //    TimeSpan matchTime = TimeSpan.Parse(strTime);
+        //    System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText(strLocation);
+
+            
+
+
+        //    Match m1 = new Match()
         //        {
-        //            match_date = match.match_date,
-        //            match_time = match.match_time,
-        //            location = match.location,
+        //            match_date = matchDate,
+        //            match_time = matchTime,
+        //            location = matchLocation,
         //            team_color1 = match.team_color1,
         //            team_color2 = match.team_color2,
         //            league_id = l1.league_id
         //        };
 
-        //        db.Match.Add(m1);
+        //    TimeSpan time = TimeSpan.Parse("07:35");
+
+        //    db.Match.Add(m1);
         //        db.SaveChanges();
 
         //        //after the game
@@ -86,12 +99,12 @@ namespace WebAPI.Controllers
         //            m1.team_color2,
         //            m1.league_id
         //        }, JsonMediaTypeFormatter.DefaultMediaType);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logger.Error("Bad Request" + e);
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException);
-        //    }
+        //   // }
+        //    //catch (Exception e)
+        //    //{
+        //    //    logger.Error("Bad Request" + e);
+        //    //    return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException);
+        //    //}
 
 
         //}
