@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
                     League l1 = db.League.Where(l => l.league_id == ls1.league_id).FirstOrDefault();
                     Fantasy_team fs = db.Fantasy_team.Where(f => f.league_id == l1.league_id && f.user_id == p1.user_id).FirstOrDefault();
 
-                    List<Listed_in> usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
+                   var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new {x.user_id, x.nickname }).ToList();
                     logger.Error(usres_in_league);
 
                     int?[] listing = new int?[usres_in_league.Count];
@@ -58,7 +58,27 @@ namespace WebAPI.Controllers
                     Player player3 = db.Player.Where(p => p.user_id == fs.player3).FirstOrDefault();
                     Player player4 = db.Player.Where(p => p.user_id == fs.player4).FirstOrDefault();
 
+                    List<Player> players = new List<Player>();
 
+                    //players.Add(player1);
+                    //players.Add(player2);
+                    //players.Add(player3);
+                    //players.Add(player4);
+
+                    //List<Player> playersInTeam = players.Select(x => new
+                    //{
+                    //    x.user_id,
+                    //    x.nickname,
+                    //    x.picture,
+                    //    x.player_score,
+                    //    x.games_played,
+                    //    x.total_wins,
+                    //    x.total_goals_scored,
+                    //    x.total_assists,
+                    //    x.total_pen_missed,
+                    //    x.total_goals_recieved,
+                    //    x.league_manager
+                    //}).Where(x => x.user_id == x.user_id).To
 
 
                     return Request.CreateResponse(HttpStatusCode.OK, new 
@@ -76,17 +96,19 @@ namespace WebAPI.Controllers
                         p1.total_pen_missed,
                         p1.total_wins,
                         //listed in
-                        listing,
+                        //listing,
+                        usres_in_league,
                         //league
                         l1.league_id,
                         l1.league_name,
                         l1.league_picture,
                         l1.league_rules,
                         //Fantasy Team
-                        fs.player1,
-                        fs.player2,
-                        fs.player3,
-                        fs.player4,
+                        //fs.player1,
+                        //fs.player2,
+                        //fs.player3,
+                        //fs.player4,
+                        //playersInTeam,
                         fs.team_budget,
                         fs.team_id,
                         fs.team_points
@@ -99,7 +121,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, data received = " + user.email + " | =======> " + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
