@@ -108,9 +108,45 @@ namespace WebAPI.Controllers
 
         // PUT: api/EditPlayer/5
         //Recive user_id, picture, nickname. return player
-        public void Put(int id)
-        {
-        }
+        //public HttpResponseMessage Put(JObject playerData)
+        //{
+        //    Player player = JsonConvert.DeserializeObject<Player>(playerData.ToString());
+        //    Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
+
+        //    try
+        //    {
+        //        p1.games_played = player.games_played;
+        //        //p1.picture = player.picture;
+        //        p1.total_assists = player.total_assists;
+        //        p1.total_goals_recieved = player.total_goals_recieved;
+        //        p1.total_goals_scored = player.total_goals_scored;
+        //        p1.total_pen_missed = player.total_pen_missed;
+        //        //p1.nickname = player.nickname;
+        //        p1.total_wins = player.total_wins;
+
+        //        db.SaveChanges();
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, new
+        //        {
+        //            p1.user_id,
+        //            p1.nickname,
+        //            p1.games_played,
+        //            p1.picture,
+        //            p1.total_assists,
+        //            p1.total_goals_recieved,
+        //            p1.total_goals_scored,
+        //            p1.total_pen_missed,
+        //            p1.total_wins
+
+
+        //        }, JsonMediaTypeFormatter.DefaultMediaType);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        logger.Error("Bad Request, data received = " + player.user_id + " | =======> " + e);
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+        //    }
+        //}
 
         // DELETE: api/EditPlayer/5
         public void Delete(int id)

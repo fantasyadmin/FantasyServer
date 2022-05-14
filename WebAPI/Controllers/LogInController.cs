@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
                     League l1 = db.League.Where(l => l.league_id == ls1.league_id).FirstOrDefault();
                     Fantasy_team fs = db.Fantasy_team.Where(f => f.league_id == l1.league_id && f.user_id == p1.user_id).FirstOrDefault();
 
-                   var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new {x.user_id, x.nickname }).ToList();
+                    var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new {x.user_id, x.nickname, x.Player.player_score }).ToList();
                     logger.Error(usres_in_league);
 
                     int?[] listing = new int?[usres_in_league.Count];
@@ -81,7 +81,7 @@ namespace WebAPI.Controllers
                     //}).Where(x => x.user_id == x.user_id).To
 
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new 
+                    return Request.CreateResponse(HttpStatusCode.OK, new
                     {
                         //user
                         u1.user_id,
