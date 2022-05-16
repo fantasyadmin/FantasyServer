@@ -19,15 +19,37 @@ namespace WebAPI.Controllers
 
         bgroup89_prodEntities db = new bgroup89_prodEntities();
         // GET: api/Match
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/Match/5
-        public string Get(int id)
+        //recive match_id. return Match
+        //get match details
+        public HttpResponseMessage Get(JObject matchData)
         {
-            return "value";
+            Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
+
+            try
+            {
+                var m1 = db.Match.Where(m => m.match_id == match.match_id).Select(x => new { x.match_id, x.league_id, x.location, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
+
+                if (m1 == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Match {match.match_id} was not found");
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { m1 }, JsonMediaTypeFormatter.DefaultMediaType);
+            }
+            catch (Exception e)
+            {
+
+                logger.Error("Bad Request, could not edit data for match: " + match.match_id + "=======>" + e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+            }
+
+
         }
 
         // POST: api/Match
@@ -41,6 +63,7 @@ namespace WebAPI.Controllers
             {
                 Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
                 League league = JsonConvert.DeserializeObject<League>(matchData.ToString());
+                Player player = JsonConvert.DeserializeObject<Player>(matchData.ToString());
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
                 if (l1 == null)
@@ -73,21 +96,6 @@ namespace WebAPI.Controllers
                 db.Match.Add(m1);
                 db.SaveChanges();
 
-                //after the game
-                //Active_in ac1 = new Active_in()
-                //{
-                //    user_id = u1.user_id,
-                //    attending = 1,
-                //    pen_missed = active_In.pen_missed,
-                //    goals_scored = active_In.goals_scored,
-                //    goals_recieved = active_In.goals_recieved,
-                //    apporval_status = active_In.apporval_status,
-                //    match_color = active_In.match_color,
-                //    assists = active_In.assists,
-
-                //};
-
-
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
                     m1.match_id,
@@ -96,7 +104,7 @@ namespace WebAPI.Controllers
                     m1.location,
                     m1.team_color1,
                     m1.team_color2,
-                    m1.league_id
+                    m1.league_id,
                 }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
@@ -177,6 +185,7 @@ namespace WebAPI.Controllers
                     m1.match_time,
                     m1.location,
                     m1.league_id
+
 
                 }, JsonMediaTypeFormatter.DefaultMediaType);
             }

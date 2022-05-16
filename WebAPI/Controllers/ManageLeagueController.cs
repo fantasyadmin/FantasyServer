@@ -56,6 +56,7 @@ namespace WebAPI.Controllers
                     counter++;
                 }
 
+                Listed_in manager = db.Listed_in.Where(l => l.league_id == l1.league_id && l.Player.league_manager).FirstOrDefault();
 
                 logger.Trace("Fetched league successfully - " /*+ l1.league_id*/);
                 return Request.CreateResponse(HttpStatusCode.OK, new
@@ -64,7 +65,9 @@ namespace WebAPI.Controllers
                     l1.league_name,
                     l1.league_picture,
                     l1.league_rules,
-                    listing
+                    listing,
+                    manager.user_id
+
                 },
                 JsonMediaTypeFormatter.DefaultMediaType);
 
@@ -142,6 +145,8 @@ namespace WebAPI.Controllers
                     listing[counter] = item.user_id;
                     counter++;
                 }
+
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {

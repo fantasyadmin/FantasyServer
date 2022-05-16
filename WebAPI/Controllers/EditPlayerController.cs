@@ -102,51 +102,56 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 logger.Error("Bad Request, could not edit data for player: " + player.nickname + "=======>" + e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
         // PUT: api/EditPlayer/5
         //Recive user_id, picture, nickname. return player
-        //public HttpResponseMessage Put(JObject playerData)
-        //{
-        //    Player player = JsonConvert.DeserializeObject<Player>(playerData.ToString());
-        //    Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
+        public HttpResponseMessage Put(JObject playerData)
+        {
+            Player player = JsonConvert.DeserializeObject<Player>(playerData.ToString());
 
-        //    try
-        //    {
-        //        p1.games_played = player.games_played;
-        //        //p1.picture = player.picture;
-        //        p1.total_assists = player.total_assists;
-        //        p1.total_goals_recieved = player.total_goals_recieved;
-        //        p1.total_goals_scored = player.total_goals_scored;
-        //        p1.total_pen_missed = player.total_pen_missed;
-        //        //p1.nickname = player.nickname;
-        //        p1.total_wins = player.total_wins;
+            try
+            {
+                Player p1 = db.Player.Where(p => p.user_id == player.user_id).FirstOrDefault();
 
-        //        db.SaveChanges();
+                //p1.games_played = player.games_played;
+                if (p1.picture != null)
+                {
+                    p1.picture = player.picture;
+                }
+                //p1.total_assists = player.total_assists;
+                //p1.total_goals_recieved = player.total_goals_recieved;
+                //p1.total_goals_scored = player.total_goals_scored;
+                //p1.total_pen_missed = player.total_pen_missed;
+                //p1.total_wins = player.total_wins;
 
-        //        return Request.CreateResponse(HttpStatusCode.OK, new
-        //        {
-        //            p1.user_id,
-        //            p1.nickname,
-        //            p1.games_played,
-        //            p1.picture,
-        //            p1.total_assists,
-        //            p1.total_goals_recieved,
-        //            p1.total_goals_scored,
-        //            p1.total_pen_missed,
-        //            p1.total_wins
+                db.SaveChanges();
 
 
-        //        }, JsonMediaTypeFormatter.DefaultMediaType);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        logger.Error("Bad Request, data received = " + player.user_id + " | =======> " + e);
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, e);
-        //    }
-        //}
+
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    p1.user_id,
+                    p1.nickname,
+                    p1.games_played,
+                    p1.picture,
+                    p1.total_assists,
+                    p1.total_goals_recieved,
+                    p1.total_goals_scored,
+                    p1.total_pen_missed,
+                    p1.total_wins
+
+
+                }, JsonMediaTypeFormatter.DefaultMediaType);
+            }
+            catch (Exception e)
+            {
+                logger.Error("Bad Request, data received = " + player.user_id + " | =======> " + e);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
 
         // DELETE: api/EditPlayer/5
         public void Delete(int id)
