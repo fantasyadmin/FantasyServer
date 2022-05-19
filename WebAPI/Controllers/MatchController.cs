@@ -64,6 +64,7 @@ namespace WebAPI.Controllers
                 Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
                 League league = JsonConvert.DeserializeObject<League>(matchData.ToString());
                 Player player = JsonConvert.DeserializeObject<Player>(matchData.ToString());
+               // string strLocation = JsonConvert.DeserializeObject<string>(str.ToString());
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
                 if (l1 == null)
@@ -75,11 +76,18 @@ namespace WebAPI.Controllers
                 string strTime = matchData["match_time"].ToString();
                 //var strLocation = string.Format("POINT({0})", matchData["location"].ToString());
                 //int intLocation = Convert.ToInt32(matchData["location"]);
-                string strLocation = matchData["location"].ToString();
+                //string strLocation = matchData["location"].ToString();
+
+                //try to take  every property like location instead of Desarialze match
+
+                string strLocation = "-122.336106, 47.605049";
+                string str1 = strLocation.Substring(0, strLocation.IndexOf(",") );
+                string str2 = strLocation.Substring(strLocation.IndexOf(",") + 1);
+                strLocation = str1 + str2;
 
                 DateTime matchDate = DateTime.Parse(strhDate);
                 TimeSpan matchTime = TimeSpan.Parse(strTime);
-                System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText("POINT(-122.336106 47.605049)");
+                System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText($"POINT({strLocation})");
 
                 Match m1 = new Match()
                 {
