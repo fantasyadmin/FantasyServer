@@ -140,6 +140,8 @@ namespace WebAPI.Controllers
 
                         db.SaveChanges();
 
+                        ft = ft = db.Fantasy_team.Where(a => a.team_id == fantasy_Team.team_id).FirstOrDefault();
+
                         var player1 = db.Player.Where(p => p.user_id == ft.player1).Select(x => new { x.user_id, x.nickname, x.picture, x.player_score, x.games_played, x.total_assists, x.total_goals_recieved, x.total_goals_scored, x.total_pen_missed, x.total_wins }).FirstOrDefault();
                         var player2 = db.Player.Where(p => p.user_id == ft.player2).Select(x => new { x.user_id, x.nickname, x.picture, x.player_score, x.games_played, x.total_assists, x.total_goals_recieved, x.total_goals_scored, x.total_pen_missed, x.total_wins }).FirstOrDefault();
                         var player3 = db.Player.Where(p => p.user_id == ft.player3).Select(x => new { x.user_id, x.nickname, x.picture, x.player_score, x.games_played, x.total_assists, x.total_goals_recieved, x.total_goals_scored, x.total_pen_missed, x.total_wins }).FirstOrDefault();
@@ -151,8 +153,8 @@ namespace WebAPI.Controllers
                             ft.user_id, 
                             ft.team_id, 
                             ft.team_points, 
-                            ft.player1, 
-                            ft.team_budget, 
+                            ft.team_budget,
+                            player1,
                             player2, 
                             player3, 
                             player4 
