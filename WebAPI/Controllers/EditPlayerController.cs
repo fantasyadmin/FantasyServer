@@ -16,11 +16,10 @@ namespace WebAPI.Controllers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-
         bgroup89_prodEntities db = new bgroup89_prodEntities();
 
         // Get: api/EditPlayer/5
-        //Recive user_id, picture, nickname. return player
+        //Recive user_id. return player
         public HttpResponseMessage Get(JObject userData)
         {
             logger.Trace("Get - EditPlayerController");
@@ -57,7 +56,6 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
-
             }
         }
 
@@ -71,7 +69,6 @@ namespace WebAPI.Controllers
 
             try
             {
-
 
                 if (player == null)
                 {
@@ -156,6 +153,7 @@ namespace WebAPI.Controllers
         // DELETE: api/EditPlayer/5
         public void Delete(int id)
         {
+
         }
     }
 }

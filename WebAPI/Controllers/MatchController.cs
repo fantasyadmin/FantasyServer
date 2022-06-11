@@ -80,14 +80,14 @@ namespace WebAPI.Controllers
 
                 //try to take  every property like location instead of Desarialze match
 
-                string strLocation = "-122.336106, 47.605049";
-                string str1 = strLocation.Substring(0, strLocation.IndexOf(",") );
-                string str2 = strLocation.Substring(strLocation.IndexOf(",") + 1);
-                strLocation = str1 + str2;
+               // string strLocation = "-122.336106, 47.605049";
+                //string str1 = strLocation.Substring(0, strLocation.IndexOf(",") );
+                //string str2 = strLocation.Substring(strLocation.IndexOf(",") + 1);
+                //strLocation = str1 + str2;
 
                 DateTime matchDate = DateTime.Parse(strhDate);
                 TimeSpan matchTime = TimeSpan.Parse(strTime);
-                System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText($"POINT({strLocation})");
+                System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText("POINT(47.605049 -82.336106)",4326);
 
                 Match m1 = new Match()
                 {
@@ -120,8 +120,6 @@ namespace WebAPI.Controllers
                 logger.Error("Bad Request" + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
-
-
         }
 
         // PUT: api/Match/5

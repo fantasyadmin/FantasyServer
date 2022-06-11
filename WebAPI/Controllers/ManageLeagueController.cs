@@ -217,7 +217,7 @@ namespace WebAPI.Controllers
         {
             logger.Trace("POST - ManageLeagueController - Delete player from league");
             Listed_in listed = JsonConvert.DeserializeObject<Listed_in>(leagueData.ToString());
-            League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
+            //League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
             try
             {
 
