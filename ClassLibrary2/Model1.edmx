@@ -69,10 +69,11 @@
           <Property Name="match_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="match_date" Type="datetime" Nullable="false" />
           <Property Name="match_time" Type="time" Precision="7" Nullable="false" />
-          <Property Name="location" Type="geography" Nullable="false" />
           <Property Name="team_color1" Type="nchar" MaxLength="10" />
           <Property Name="team_color2" Type="nchar" MaxLength="10" />
           <Property Name="league_id" Type="int" Nullable="false" />
+          <Property Name="lng" Type="float" />
+          <Property Name="lat" Type="float" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -341,10 +342,11 @@
           <Property Name="match_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="match_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="match_time" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="location" Type="Geography" Nullable="false" />
           <Property Name="team_color1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="team_color2" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="league_id" Type="Int32" Nullable="false" />
+          <Property Name="lng" Type="Double" />
+          <Property Name="lat" Type="Double" />
           <NavigationProperty Name="Active_in" Relationship="Self.FK_Active_in_Match1" FromRole="Match" ToRole="Active_in" />
           <NavigationProperty Name="League" Relationship="Self.FK_league_id" FromRole="Match" ToRole="League" />
         </EntityType>
@@ -499,7 +501,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="bgroup89_prodEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="bgroup89_prod_Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Active_in" EntityType="Self.Active_in" />
           <EntitySet Name="Fantasy_team" EntityType="Self.Fantasy_team" />
           <EntitySet Name="League" EntityType="Self.League" />
@@ -547,7 +549,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bgroup89_prodModelStoreContainer" CdmEntityContainer="bgroup89_prodEntities">
+        <EntityContainerMapping StorageEntityContainer="bgroup89_prodModelStoreContainer" CdmEntityContainer="bgroup89_prod_Entities">
           <EntitySetMapping Name="Active_in">
             <EntityTypeMapping TypeName="bgroup89_prodModel.Active_in">
               <MappingFragment StoreEntitySet="Active_in">
@@ -608,10 +610,11 @@
                 <ScalarProperty Name="match_id" ColumnName="match_id" />
                 <ScalarProperty Name="match_date" ColumnName="match_date" />
                 <ScalarProperty Name="match_time" ColumnName="match_time" />
-                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="team_color1" ColumnName="team_color1" />
                 <ScalarProperty Name="team_color2" ColumnName="team_color2" />
                 <ScalarProperty Name="league_id" ColumnName="league_id" />
+                <ScalarProperty Name="lng" ColumnName="lng" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

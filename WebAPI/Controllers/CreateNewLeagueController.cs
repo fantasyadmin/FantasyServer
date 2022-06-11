@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        bgroup89_prodEntities db = new bgroup89_prodEntities();
+        bgroup89_prod_Entities db = new bgroup89_prod_Entities();
 
 
         // POST: api/CreateNewLeague

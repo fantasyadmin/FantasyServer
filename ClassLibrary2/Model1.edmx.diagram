@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d77ceaef11814ad2aaba4fa466c3e02e" Name="Diagram1" ZoomLevel="83">
-        <EntityTypeShape EntityType="bgroup89_prodModel.Active_in" Width="1.5" PointX="5.125" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_prodModel.Fantasy_team" Width="1.5" PointX="7.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_prodModel.League" Width="1.5" PointX="2.125" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_prodModel.Listed_in" Width="1.5" PointX="4.625" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_prodModel.Match" Width="1.5" PointX="0.625" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_prodModel.Player" Width="1.5" PointX="9.75" PointY="10.25" IsExpanded="true" />
+      <Diagram DiagramId="d724678d0075493dbdcedbef1b149587" Name="Diagram1">
+        <EntityTypeShape EntityType="bgroup89_prodModel.Active_in" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.Fantasy_team" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.League" Width="1.5" PointX="1.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.Listed_in" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.Match" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.Player" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_prodModel.Smart_calc" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bgroup89_prodModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bgroup89_prodModel.User" Width="1.5" PointX="11" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.User" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <AssociationConnector Association="bgroup89_prodModel.FK_Active_in_Match1" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_prodModel.FK_Active_in_User" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_prodModel.FK_Fantasy_team_League" ManuallyRouted="false" />

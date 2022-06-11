@@ -13,10 +13,10 @@ namespace ClassLibrary2
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class bgroup89_prodEntities : DbContext
+    public partial class bgroup89_prod_Entities : DbContext
     {
-        public bgroup89_prodEntities()
-            : base("name=bgroup89_prodEntities")
+        public bgroup89_prod_Entities()
+            : base("name=bgroup89_prod_Entities")
         {
         }
     

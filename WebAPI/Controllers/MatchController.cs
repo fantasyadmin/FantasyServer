@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        bgroup89_prodEntities db = new bgroup89_prodEntities();
+        bgroup89_prod_Entities db = new bgroup89_prod_Entities();
         // GET: api/Match
         //public IEnumerable<string> Get()
         //{
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                var m1 = db.Match.Where(m => m.match_id == match.match_id).Select(x => new { x.match_id, x.league_id, x.location, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
+                var m1 = db.Match.Where(m => m.match_id == match.match_id).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
 
                 if (m1 == null)
                 {
@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
                 Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
                 League league = JsonConvert.DeserializeObject<League>(matchData.ToString());
                 Player player = JsonConvert.DeserializeObject<Player>(matchData.ToString());
-               // string strLocation = JsonConvert.DeserializeObject<string>(str.ToString());
+                // string strLocation = JsonConvert.DeserializeObject<string>(str.ToString());
 
                 League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
                 if (l1 == null)
@@ -74,26 +74,20 @@ namespace WebAPI.Controllers
 
                 string strhDate = matchData["match_date"].ToString(); //Convert.ToDateTime(match.match_date);
                 string strTime = matchData["match_time"].ToString();
-                //var strLocation = string.Format("POINT({0})", matchData["location"].ToString());
-                //int intLocation = Convert.ToInt32(matchData["location"]);
-                //string strLocation = matchData["location"].ToString();
+                double lng = (double)match.lng;
+                double lat = (double)match.lat;
 
-                //try to take  every property like location instead of Desarialze match
-
-               // string strLocation = "-122.336106, 47.605049";
-                //string str1 = strLocation.Substring(0, strLocation.IndexOf(",") );
-                //string str2 = strLocation.Substring(strLocation.IndexOf(",") + 1);
-                //strLocation = str1 + str2;
 
                 DateTime matchDate = DateTime.Parse(strhDate);
                 TimeSpan matchTime = TimeSpan.Parse(strTime);
-                System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText("POINT(47.605049 -82.336106)",4326);
+                //System.Data.Entity.Spatial.DbGeography matchLocation = System.Data.Entity.Spatial.DbGeography.FromText("POINT(47.605049 -82.336106)",4326);
 
                 Match m1 = new Match()
                 {
                     match_date = matchDate,
                     match_time = matchTime,
-                    location = matchLocation,
+                    lng = lng,
+                    lat = lat,
                     team_color1 = match.team_color1,
                     team_color2 = match.team_color2,
                     league_id = l1.league_id
@@ -109,7 +103,8 @@ namespace WebAPI.Controllers
                     m1.match_id,
                     m1.match_date,
                     m1.match_time,
-                    m1.location,
+                    m1.lng,
+                    m1.lat,
                     m1.team_color1,
                     m1.team_color2,
                     m1.league_id,
@@ -189,7 +184,8 @@ namespace WebAPI.Controllers
                     m1.match_id,
                     m1.match_date,
                     m1.match_time,
-                    m1.location,
+                    m1.lng,
+                    m1.lat,
                     m1.league_id
 
 
