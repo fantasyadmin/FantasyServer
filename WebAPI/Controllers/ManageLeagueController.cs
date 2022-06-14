@@ -44,17 +44,8 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
                 }
 
+                var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new { x.user_id, x.nickname, x.Player.player_score, x.Player.picture }).ToList();
 
-                List<Listed_in> players_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
-                logger.Error(players_in_league);
-
-                int?[] listing = new int?[40];
-                int counter = 0;
-                foreach (var item in players_in_league)
-                {
-                    listing[counter] = item.user_id;
-                    counter++;
-                }
 
                 Listed_in manager = db.Listed_in.Where(l => l.league_id == l1.league_id && l.Player.league_manager).FirstOrDefault();
 
@@ -65,7 +56,7 @@ namespace WebAPI.Controllers
                     l1.league_name,
                     l1.league_picture,
                     l1.league_rules,
-                    listing,
+                    usres_in_league,
                     manager.user_id
 
                 },
@@ -134,19 +125,7 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
                 }
 
-
-                List<Listed_in> players_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
-                logger.Error(players_in_league);
-
-                int?[] listing = new int?[40];
-                int counter = 0;
-                foreach (var item in players_in_league)
-                {
-                    listing[counter] = item.user_id;
-                    counter++;
-                }
-
-
+                var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new { x.user_id, x.nickname, x.Player.player_score, x.Player.picture }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
@@ -154,7 +133,7 @@ namespace WebAPI.Controllers
                     l1.league_name,
                     l1.league_picture,
                     l1.league_rules,
-                    listing
+                    usres_in_league
                 }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
@@ -235,16 +214,9 @@ namespace WebAPI.Controllers
                 db.Listed_in.Remove(ls);
                 db.SaveChanges();
                 logger.Trace("User removed from league - name: " + ls.user_id);
-                List<Listed_in> players_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).ToList();
-                logger.Error(players_in_league);
+               
+                var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new { x.user_id, x.nickname, x.Player.player_score, x.Player.picture }).ToList();
 
-                int?[] listing = new int?[40];
-                int counter = 0;
-                foreach (var item in players_in_league)
-                {
-                    listing[counter] = item.user_id;
-                    counter++;
-                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
@@ -252,7 +224,7 @@ namespace WebAPI.Controllers
                     l1.league_name,
                     l1.league_picture,
                     l1.league_rules,
-                    listing
+                    usres_in_league
                 }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)

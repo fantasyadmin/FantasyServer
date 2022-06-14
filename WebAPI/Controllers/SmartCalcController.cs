@@ -67,6 +67,7 @@ namespace WebAPI.Controllers
                 double goalieRate = p1.games_played / (p1.total_goals_recieved + 1);
                 double teamPlayerRate = (p1.total_wins + p1.total_assists) / (p1.games_played);
                 p1.player_score = Convert.ToInt32((attackRate + goalieRate + teamPlayerRate) / 3 * 100);
+                
 
                 db.SaveChanges();
 

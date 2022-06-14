@@ -40,7 +40,9 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"Match {match.match_id} was not found");
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { m1 }, JsonMediaTypeFormatter.DefaultMediaType);
+                string matchDateStr = m1.match_date.ToString().Substring(0, 10);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { m1.match_id, m1.league_id, m1.match_time, matchDateStr, m1.lat, m1.lng, m1.team_color1, m1.team_color2 }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
@@ -98,10 +100,12 @@ namespace WebAPI.Controllers
                 db.Match.Add(m1);
                 db.SaveChanges();
 
+                string matchDateStr = m1.match_date.ToString().Substring(0, 10);
+
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
                     m1.match_id,
-                    m1.match_date,
+                    matchDateStr,
                     m1.match_time,
                     m1.lng,
                     m1.lat,
@@ -138,10 +142,12 @@ namespace WebAPI.Controllers
                 m1.team_color2 = match.team_color2;
                 db.SaveChanges();
 
+                string matchDateStr = m1.match_date.ToString().Substring(0, 10);
+
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
                     m1.match_id,
-                    m1.match_date,
+                    matchDateStr,
                     m1.match_time,
                     //m1.location,
                     m1.team_color1,
@@ -178,11 +184,13 @@ namespace WebAPI.Controllers
                 db.Match.Remove(m1);
                 db.SaveChanges();
 
+                string matchDateStr = m1.match_date.ToString().Substring(0, 10);
+
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
 
                     m1.match_id,
-                    m1.match_date,
+                    matchDateStr,
                     m1.match_time,
                     m1.lng,
                     m1.lat,
