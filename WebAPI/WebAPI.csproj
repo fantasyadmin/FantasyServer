@@ -181,6 +181,7 @@
     <Compile Include="Controllers\CreateNewFantasyTeamController.cs" />
     <Compile Include="Controllers\CreateNewLeagueController.cs" />
     <Compile Include="Controllers\EditPlayerController.cs" />
+    <Compile Include="Controllers\GetFantasyTeamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ManageFantasyTeamController.cs" />
