@@ -12,24 +12,24 @@ using NLog;
 
 namespace WebAPI.Controllers
 {
-    public class CloseMatchController : ApiController
+    public class LastMatchController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         bgroup89_prod_Entities db = new bgroup89_prod_Entities();
-        // GET: api/CloseMatch
+        // GET: api/LastMatch
         //public IEnumerable<string> Get()
         //{
         //    return new string[] { "value1", "value2" };
         //}
 
-        // GET: api/CloseMatch/5
+        // GET: api/LastMatch/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/CloseMatch
+        // POST: api/LastMatch
         public HttpResponseMessage Post(JObject matchData)
         {
             Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
@@ -37,10 +37,11 @@ namespace WebAPI.Controllers
             try
             {
                 DateTime today = DateTime.Today;
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.Now ;
                 TimeSpan time = now - today;
+                
 
-                var m1 = db.Match.Where(m => m.league_id == match.league_id && m.match_date >= today && m.match_time >= time).OrderBy(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
+                var m1 = db.Match.Where(m => m.league_id == match.league_id && m.match_date <= today && m.match_time <= time).OrderByDescending(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
 
                 if (m1 == null)
                 {
@@ -59,12 +60,12 @@ namespace WebAPI.Controllers
             }
         }
 
-        // PUT: api/CloseMatch/5
+        // PUT: api/LastMatch/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE: api/CloseMatch/5
+        // DELETE: api/LastMatch/5
         public void Delete(int id)
         {
         }

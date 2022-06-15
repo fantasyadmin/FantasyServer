@@ -183,9 +183,11 @@
     <Compile Include="Controllers\EditPlayerController.cs" />
     <Compile Include="Controllers\GetFantasyTeamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LastMatchController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ManageFantasyTeamController.cs" />
     <Compile Include="Controllers\ManageLeagueController.cs" />
+    <Compile Include="Controllers\MatchActiveInLeagueController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
     <Compile Include="Controllers\PlayersInLeagueController.cs" />
