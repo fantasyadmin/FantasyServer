@@ -44,11 +44,16 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"ActiveIn {active_In.match_id} was not found");
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { m1 }, JsonMediaTypeFormatter.DefaultMediaType);
+                List<Player> playersList = new List<Player>();
+                //foreach (var item in m1)
+                //{
+                //    p1.Where(p => p.user_id == item.user_id).Select(x => new { x.user_id, x.nickname }).ToList();
+                //}
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { m1}, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
-
                 logger.Error("Bad Request, could not edit data for match: " + active_In.match_id + "=======>" + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }

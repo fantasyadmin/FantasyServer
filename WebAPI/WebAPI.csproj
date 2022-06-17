@@ -190,6 +190,7 @@
     <Compile Include="Controllers\MatchActiveInLeagueController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
+    <Compile Include="Controllers\PlayerDiamondController.cs" />
     <Compile Include="Controllers\PlayersInLeagueController.cs" />
     <Compile Include="Controllers\PlayersInTeamController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
