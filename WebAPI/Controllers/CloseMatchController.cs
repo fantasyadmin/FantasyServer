@@ -49,7 +49,10 @@ namespace WebAPI.Controllers
 
                 string matchDateStr = m1.match_date.ToString().Substring(0, 10);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { m1.match_id, m1.league_id, m1.match_time, matchDateStr, m1.lat, m1.lng, m1.team_color1, m1.team_color2 }, JsonMediaTypeFormatter.DefaultMediaType);
+                string color1 = m1.team_color1.Substring(0,m1.team_color1.IndexOf(" "));
+                string color2 = m1.team_color2.Substring(0, m1.team_color2.IndexOf(" "));
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { m1.match_id, m1.league_id, m1.match_time, matchDateStr, m1.lat, m1.lng, color1, color2 }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {
