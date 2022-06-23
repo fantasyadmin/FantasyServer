@@ -88,7 +88,7 @@ namespace WebAPI.Controllers
                 //p1.nickname = player.nickname;
                 p1.picture = player.picture;
 
-                db.Player.Append(p1);
+                //db.Player.Append(p1);
                 db.SaveChanges();
                 logger.Trace("player data was edited in DB Player - " + p1.nickname);
 
