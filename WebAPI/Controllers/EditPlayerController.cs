@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/EditPlayer
-        //Recive user_id, picture, nickname. return player
+        //Recive user_id, picture. return player
 
         public HttpResponseMessage Post(JObject userData)
         {

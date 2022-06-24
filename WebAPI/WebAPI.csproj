@@ -180,6 +180,7 @@
     <Compile Include="Controllers\CloseMatchController.cs" />
     <Compile Include="Controllers\CreateNewFantasyTeamController.cs" />
     <Compile Include="Controllers\CreateNewLeagueController.cs" />
+    <Compile Include="Controllers\DeletePLController.cs" />
     <Compile Include="Controllers\EditPlayerController.cs" />
     <Compile Include="Controllers\GetFantasyTeamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
