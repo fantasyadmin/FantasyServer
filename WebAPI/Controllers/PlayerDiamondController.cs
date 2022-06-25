@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"Player Not Found, player No.: {p1.user_id}");
                 }
 
-                double attackRate = (p1.total_wins + p1.total_goals_scored - p1.total_pen_missed) / (p1.games_played);
+                double attackRate = (p1.total_wins + p1.total_goals_scored * (1 / ((double)(p1.total_pen_missed / 10) + 1))) / (p1.games_played);
                 double goalieRate = p1.games_played / (p1.total_goals_recieved + 1);
                 double teamPlayerRate = (p1.total_wins + p1.total_assists) / (p1.games_played);
                 p1.player_score = Convert.ToInt32((attackRate + goalieRate + teamPlayerRate) / 3 * 100);

@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
                 p1.total_pen_missed += ac1.pen_missed;
                 p1.total_wins += ac1.wins;
 
-                double attackRate = (p1.total_wins + p1.total_goals_scored - p1.total_pen_missed) / (p1.games_played);
+                double attackRate = (p1.total_wins + p1.total_goals_scored * (1/((double)(p1.total_pen_missed/10)+1))) / (p1.games_played);
                 double goalieRate = p1.games_played / (p1.total_goals_recieved + 1);
                 double teamPlayerRate = (p1.total_wins + p1.total_assists) / (p1.games_played);
                 p1.player_score = Convert.ToInt32((attackRate + goalieRate + teamPlayerRate) / 3 * 100);

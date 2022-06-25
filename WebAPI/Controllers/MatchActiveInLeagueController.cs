@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             try
             {
 
-                var m1 = db.Active_in.Where(a => a.league_id == active_In.league_id).Select(x => new { x.match_id, x.league_id, x.user_id, x.apporval_status, x.wins, x.assists, x.goals_recieved, x.goals_scored, x.match_color, x.pen_missed}).ToList();
+                var m1 = db.Active_in.Where(a => a.league_id == active_In.league_id).Select(x => new { x.match_id, x.league_id, x.user_id, x.wins, x.assists, x.goals_recieved, x.goals_scored, x.match_color, x.pen_missed}).ToList();
 
                 if (m1 == null)
                 {

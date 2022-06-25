@@ -41,16 +41,71 @@ namespace WebAPI.Controllers
             //League league = JsonConvert.DeserializeObject<League>(leagueData.ToString());
             try
             {
-
                 //Player player = JsonConvert.DeserializeObject<Player>(leagueData.ToString());
 
                 Listed_in ls = db.Listed_in.Where(p => p.user_id == listed.user_id && p.league_id == listed.league_id).FirstOrDefault();
                 League l1 = db.League.Where(l => l.league_id == listed.league_id).FirstOrDefault();
+                Fantasy_team fs = db.Fantasy_team.Where(f => f.user_id == ls.user_id).FirstOrDefault();
 
                 if (ls == null)
                 {
                     logger.Error("POST - Empty reference - user: " + ls);
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Player not found");
+                }
+
+                db.Fantasy_team.Remove(fs);
+                db.SaveChanges();
+
+                var fs1 = db.Fantasy_team.Where(s => s.league_id == listed.league_id).ToList();
+
+                foreach (var team in fs1)
+                {
+                    Fantasy_team fs2 = db.Fantasy_team.Where(a => a.team_id == team.team_id).FirstOrDefault();
+
+                    if (team.player1 == listed.user_id || team.player2 == listed.user_id || team.player3 == listed.user_id || team.player4 == listed.user_id)
+                    {
+                        if (team.player1 == listed.user_id)
+                        {
+                            fs2.player1 = null;
+                        }
+                        if (team.player2 == listed.user_id)
+                        {
+                            fs2.player2 = null;
+                        }
+                        if (team.player3 == listed.user_id)
+                        {
+                            fs2.player3 = null;
+                        }
+                        if (team.player4 == listed.user_id)
+                        {
+                            fs2.player4 = null;
+                        }
+
+                        db.SaveChanges();
+
+                        Player p1 = db.Player.Where(p => p.user_id == listed.user_id).FirstOrDefault();
+                        fs2.team_budget += p1.player_score;
+                        db.SaveChanges();
+
+                        p1.player_score = 0;
+                        p1.games_played = 0;
+                        p1.total_assists = 0;
+                        p1.total_goals_recieved = 0;
+                        p1.total_goals_scored = 0;
+                        p1.total_pen_missed = 0;
+                        p1.total_wins = 0;
+                        db.SaveChanges();
+                    }
+                }
+
+                List<Active_in> ai = db.Active_in.Where(a => a.league_id == ls.league_id && a.user_id == ls.user_id).ToList();
+                if (ai != null)
+                {
+                    foreach (var item in ai)
+                    {
+                        Active_in ai1 = db.Active_in.Where(a => a.league_id == item.league_id && a.user_id == item.user_id).FirstOrDefault();
+                        db.Active_in.Remove(ai1);
+                    }
                 }
 
                 db.Listed_in.Remove(ls);
