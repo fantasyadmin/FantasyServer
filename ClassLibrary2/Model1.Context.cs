@@ -34,5 +34,6 @@ namespace ClassLibrary2
         public virtual DbSet<Smart_calc> Smart_calc { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Confirm> Confirm { get; set; }
     }
 }

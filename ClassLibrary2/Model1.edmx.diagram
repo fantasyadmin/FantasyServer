@@ -22,6 +22,7 @@
         <AssociationConnector Association="bgroup89_prodModel.FK_Listed_in_League" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_prodModel.FK_Listed_in_Player" ManuallyRouted="false" />
         <AssociationConnector Association="bgroup89_prodModel.FK_Player_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="bgroup89_prodModel.Confirm" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

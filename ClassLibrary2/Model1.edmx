@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bgroup89_prodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bgroup89_prodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Active_in">
           <Key>
             <PropertyRef Name="user_id" />
@@ -22,6 +22,14 @@
           <Property Name="match_id" Type="int" Nullable="false" />
           <Property Name="league_id" Type="int" Nullable="false" />
           <Property Name="wins" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Confirm">
+          <Key>
+            <PropertyRef Name="code_id" />
+          </Key>
+          <Property Name="code_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="confirmation_code" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Fantasy_team">
           <Key>
@@ -223,6 +231,7 @@
         </Association>
         <EntityContainer Name="bgroup89_prodModelStoreContainer">
           <EntitySet Name="Active_in" EntityType="Self.Active_in" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Confirm" EntityType="Self.Confirm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fantasy_team" EntityType="Self.Fantasy_team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Listed_in" EntityType="Self.Listed_in" Schema="dbo" store:Type="Tables" />
@@ -264,8 +273,7 @@
             <End Role="Player" EntitySet="Player" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bgroup89_prodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -543,7 +551,16 @@
             <End Role="User" EntitySet="User" />
             <End Role="Player" EntitySet="Player" />
           </AssociationSet>
+          <EntitySet Name="Confirm" EntityType="bgroup89_prodModel.Confirm" />
         </EntityContainer>
+        <EntityType Name="Confirm">
+          <Key>
+            <PropertyRef Name="code_id" />
+          </Key>
+          <Property Name="code_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="confirmation_code" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -664,6 +681,15 @@
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Confirm">
+            <EntityTypeMapping TypeName="bgroup89_prodModel.Confirm">
+              <MappingFragment StoreEntitySet="Confirm">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="confirmation_code" ColumnName="confirmation_code" />
+                <ScalarProperty Name="code_id" ColumnName="code_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

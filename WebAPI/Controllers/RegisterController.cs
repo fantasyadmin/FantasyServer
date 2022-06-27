@@ -33,6 +33,7 @@ namespace WebAPI.Controllers
             
             League league = JsonConvert.DeserializeObject<League>(userData.ToString());
 
+            Confirm confirm = JsonConvert.DeserializeObject<Confirm>(userData.ToString());
 
             try
             {
@@ -40,6 +41,14 @@ namespace WebAPI.Controllers
                 {
                     logger.Error("POST - Empty reference - user: " + user + " | player: " + player);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching user input - Oops... Something Went Wrong!");
+                }
+
+                Confirm c1 = db.Confirm.Where(c => c.email == user.email && c.confirmation_code == confirm.confirmation_code).FirstOrDefault();
+
+                if (c1 == null)
+                {
+                    logger.Error("Invalid Confirmation Code");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Invalid Confirmation Code");
                 }
 
                 User u1 = db.User.Where(a => a.email == user.email).FirstOrDefault();
