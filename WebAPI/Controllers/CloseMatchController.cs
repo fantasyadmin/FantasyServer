@@ -49,7 +49,6 @@ namespace WebAPI.Controllers
                     if (item.match_date == today)
                     {
                         m1 = m2.Where(m => m.match_time > time).OrderByDescending(x => x.match_time).FirstOrDefault();
-
                     }
                 }
 

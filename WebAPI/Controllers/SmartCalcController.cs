@@ -41,6 +41,12 @@ namespace WebAPI.Controllers
             {
                 Active_in ac1 = db.Active_in.Where(a => a.user_id == active_In.user_id && a.match_id == active_In.match_id).FirstOrDefault();
 
+                if (ac1 == null)
+                {
+                    logger.Info($"POST - Player Active in Match Data was not found: {active_In.user_id} in match: {active_In.match_id}");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Player Active in Match Data was not found: {active_In.user_id} in match: {active_In.match_id}");
+                }
+
                 ac1.apporval_status = active_In.apporval_status;
 
                 Player p1 = db.Player.Where(p => p.user_id == ac1.user_id).FirstOrDefault();
