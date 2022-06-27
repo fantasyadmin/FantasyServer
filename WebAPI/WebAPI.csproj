@@ -195,6 +195,7 @@
     <Compile Include="Controllers\PlayersInLeagueController.cs" />
     <Compile Include="Controllers\PlayersInTeamController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\SmartCalcController.cs" />
     <Compile Include="Controllers\TeamsInLeagueController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

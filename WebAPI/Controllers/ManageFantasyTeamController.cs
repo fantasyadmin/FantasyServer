@@ -136,8 +136,14 @@ namespace WebAPI.Controllers
                                 break;
                         }
 
-                        ft.team_budget -= p1.player_score;
-                        ft.team_points += p1.player_score;
+                        if (ft.team_budget - p1.player_score >= 0)
+                        {
+                            ft.team_budget -= p1.player_score;
+                        }
+                        else
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "TeamBudget is too Low");
+                        }
 
                         db.SaveChanges();
 
@@ -222,7 +228,6 @@ namespace WebAPI.Controllers
                 }
 
                 ft.team_budget += p1.player_score;
-                ft.team_points -= p1.player_score;
 
                 db.SaveChanges();
 

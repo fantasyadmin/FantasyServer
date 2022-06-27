@@ -40,7 +40,18 @@ namespace WebAPI.Controllers
                 DateTime now = DateTime.Now;
                 TimeSpan time = now - today;
 
-                var m1 = db.Match.Where(m => m.league_id == match.league_id && m.match_date >= today && m.match_time >= time).OrderBy(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
+                var m2 = db.Match.Where(m => m.league_id == match.league_id && m.match_date >= today).OrderByDescending(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).ToList();
+
+                var m1 = m2.FirstOrDefault(); 
+                
+                    foreach (var item in m2)
+                {
+                    if (item.match_date == today)
+                    {
+                        m1 = m2.Where(m => m.match_time > time).OrderByDescending(x => x.match_time).FirstOrDefault();
+
+                    }
+                }
 
                 if (m1 == null)
                 {
