@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
                     db.SaveChanges();
                     logger.Trace("POST - added Fantasy-Team to League - " + league.league_id);
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
+                    return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname, l1.league_id }, JsonMediaTypeFormatter.DefaultMediaType);
 
                 }
                 else
@@ -146,7 +146,7 @@ namespace WebAPI.Controllers
                     db.SaveChanges();
                     logger.Trace("POST - added Fantasy-Team to League - " + l.league_id);
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname }, JsonMediaTypeFormatter.DefaultMediaType);
+                    return Request.CreateResponse(HttpStatusCode.OK, new { u.user_id, p.nickname, l.league_id }, JsonMediaTypeFormatter.DefaultMediaType);
 
                 }
 

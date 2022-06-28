@@ -40,25 +40,31 @@ namespace WebAPI.Controllers
                     League l1 = db.League.Where(l => l.league_id == ls1.league_id).FirstOrDefault();
                     Fantasy_team fs = db.Fantasy_team.Where(f => f.league_id == l1.league_id && f.user_id == p1.user_id).FirstOrDefault();
 
-                    var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new {x.user_id, x.nickname, x.Player.player_score, x.Player.picture }).ToList();
-                    logger.Error(usres_in_league);
+                    //var usres_in_league = db.Listed_in.Where(x => x.league_id == l1.league_id).Select(x => new {x.user_id, x.nickname, x.Player.player_score, x.Player.picture }).ToList();
+                    //logger.Error(usres_in_league);
 
-                    int?[] listing = new int?[usres_in_league.Count];
-                    int counter_u = 0;
+                    //int?[] listing = new int?[usres_in_league.Count];
+                    //int counter_u = 0;
 
-                    foreach (var item in usres_in_league)
-                    {
-                        listing[counter_u] = item.user_id;
+                    //foreach (var item in usres_in_league)
+                    //{
+                    //    listing[counter_u] = item.user_id;
 
-                        counter_u++;
-                    }
+                    //    counter_u++;
+                    //}
 
                     Player player1 = db.Player.Where(p => p.user_id == fs.player1).FirstOrDefault();
                     Player player2 = db.Player.Where(p => p.user_id == fs.player2).FirstOrDefault();
                     Player player3 = db.Player.Where(p => p.user_id == fs.player3).FirstOrDefault();
                     Player player4 = db.Player.Where(p => p.user_id == fs.player4).FirstOrDefault();
 
-                    List<Player> players = new List<Player>();
+
+                    var usres_in_league = db.Listed_in.Join(db.Fantasy_team, f => f.user_id, p => p.user_id, (f, p) => new { Listed_in = f, Fantasy_team = p }).Where(fp => fp.Listed_in.league_id == l1.league_id).GroupBy(g => g.Fantasy_team.user_id).Select(x => new { x.FirstOrDefault().Listed_in.user_id, x.FirstOrDefault().Listed_in.nickname, x.FirstOrDefault().Listed_in.Player.player_score, x.FirstOrDefault().Listed_in.Player.picture, x.FirstOrDefault().Fantasy_team.team_id, x.FirstOrDefault().Fantasy_team.team_points }).ToList();
+
+                    //var abcd = db.Listed_in.Join(db.Fantasy_team, f => f.user_id, p => p.user_id, (f, p) => new { Listed_in = f, Fantasy_team = p }).Where(fp => fp.Listed_in.league_id == l1.league_id).Select(x => new { x.Listed_in.user_id, x.Listed_in.nickname, x.Listed_in.Player.player_score, x.Listed_in.Player.picture, x.Fantasy_team.team_id, x.Fantasy_team.team_points }).Distinct().ToList();
+
+
+                    //List<Player> players = new List<Player>();
 
                     //players.Add(player1);
                     //players.Add(player2);
@@ -112,7 +118,8 @@ namespace WebAPI.Controllers
                         //playersInTeam,
                         fs.team_budget,
                         fs.team_id,
-                        fs.team_points
+                        fs.team_points,
+                        abcd
                     }, JsonMediaTypeFormatter.DefaultMediaType);
                 }
 
