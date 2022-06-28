@@ -119,7 +119,6 @@ namespace WebAPI.Controllers
                         fs.team_budget,
                         fs.team_id,
                         fs.team_points,
-                        abcd
                     }, JsonMediaTypeFormatter.DefaultMediaType);
                 }
 
