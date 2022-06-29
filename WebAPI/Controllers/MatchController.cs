@@ -173,6 +173,7 @@ namespace WebAPI.Controllers
             try
             {
                 Match match = JsonConvert.DeserializeObject<Match>(matchData.ToString());
+                Active_in active_In = JsonConvert.DeserializeObject<Active_in>(matchData.ToString());
 
                 Match m1 = db.Match.Where(m => m.match_id == match.match_id).FirstOrDefault();
 
@@ -180,6 +181,17 @@ namespace WebAPI.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"Match {match.match_id} was not found");
                 }
+
+                var ac1 = db.Active_in.Where(ac => ac.match_id == m1.match_id).ToList();
+                foreach (var item in ac1)
+                {
+                    if (ac1 != null)
+                    {
+                        db.Active_in.Remove(item);
+                        db.SaveChanges();
+                    }
+                }
+
 
                 db.Match.Remove(m1);
                 db.SaveChanges();

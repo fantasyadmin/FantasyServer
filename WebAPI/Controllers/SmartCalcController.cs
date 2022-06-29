@@ -72,9 +72,9 @@ namespace WebAPI.Controllers
 
                 db.SaveChanges();
 
-                db.Active_in.Remove(ac1);
+                //db.Active_in.Remove(ac1);
 
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {

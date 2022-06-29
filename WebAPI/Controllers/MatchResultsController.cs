@@ -77,6 +77,13 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
 
+                Active_in ac = db.Active_in.Where(a => a.user_id == active_In.user_id && a.match_id == active_In.match_id).FirstOrDefault();
+
+                if (ac != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Can't submit more than 1 Match Results form. Please wait for League Manager's approval, or Edit your existing form");
+                }
+
                 Active_in ac1 = new Active_in()
                 {
                     assists = active_In.assists,

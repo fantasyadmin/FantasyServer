@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
 
             foreach (var item in ft)
             {
-                var pl1 = db.Player.Where(p => p.user_id == item.player1).ToList().Select(x => new
+                var pl1 = db.Player.Where(p => p.user_id == item.player1).Select(x => new
                 {
                     x.user_id,
                     x.nickname,
@@ -53,8 +53,8 @@ namespace WebAPI.Controllers
                     x.total_pen_missed,
                     x.total_goals_recieved,
                     x.league_manager
-                });
-                var pl2 = db.Player.Where(p => p.user_id == item.player2).ToList().Select(x => new
+                }).ToList();
+                var pl2 = db.Player.Where(p => p.user_id == item.player2).Select(x => new
                 {
                     x.user_id,
                     x.nickname,
@@ -67,8 +67,8 @@ namespace WebAPI.Controllers
                     x.total_pen_missed,
                     x.total_goals_recieved,
                     x.league_manager
-                });
-                var pl3 = db.Player.Where(p => p.user_id == item.player3).ToList().Select(x => new
+                }).ToList();
+                var pl3 = db.Player.Where(p => p.user_id == item.player3).Select(x => new
                 {
                     x.user_id,
                     x.nickname,
@@ -81,8 +81,8 @@ namespace WebAPI.Controllers
                     x.total_pen_missed,
                     x.total_goals_recieved,
                     x.league_manager
-                });
-                var pl4 = db.Player.Where(p => p.user_id == item.player4).ToList().Select(x => new
+                }).ToList();
+                var pl4 = db.Player.Where(p => p.user_id == item.player4).Select(x => new
                 {
                     x.user_id,
                     x.nickname,
@@ -95,7 +95,7 @@ namespace WebAPI.Controllers
                     x.total_pen_missed,
                     x.total_goals_recieved,
                     x.league_manager
-                });
+                }).ToList();
                 yield return new
                 {
                     item.user_id,
