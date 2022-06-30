@@ -117,12 +117,12 @@ namespace WebAPI.Controllers
                     League l = new League()
                     {
                         league_name = "",
-                        invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705"
+                        invite_url = ""
                     };
 
                     db.League.Add(l);
                     db.SaveChanges();
-                    logger.Trace("POST - Created new (Generic) League - " + league.league_id);
+                    //logger.Trace("POST - Created new (Generic) League - " + league.league_id);
 
                     Listed_in ls1 = new Listed_in()
                     {
@@ -134,7 +134,7 @@ namespace WebAPI.Controllers
 
                     db.Listed_in.Add(ls1);
                     db.SaveChanges();
-                    logger.Trace("POST - added player to existing league - " + league.league_id + " added user: - " + u.user_id);
+                    //logger.Trace("POST - added player to existing league - " + league.league_id + " added user: - " + u.user_id);
 
                     Fantasy_team ft1 = new Fantasy_team()
                     {

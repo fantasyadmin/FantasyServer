@@ -154,32 +154,21 @@ namespace WebAPI.Controllers
             try
             {
 
-                League l1 = db.League.Where(l => l.league_id == league.league_id).FirstOrDefault();
+                var leagues = db.League.ToList();
 
-                if (l1 == null)
+                foreach (var item in leagues)
                 {
-                    logger.Error("POST - Empty reference - league: " + l1);
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "Could not find League");
-                }
-
-                if (league.league_name != null)
-                {
-                    l1.league_name = league.league_name;
-                }
-                if (league.league_picture != null)
-                {
-                    l1.league_picture = league.league_picture;
-                }
-                if (league.league_rules != null)
-                {
-                    l1.league_rules = league.league_rules;
+                    if (item.invite_url != "")
+                    {
+                        League l1 = item;
+                        l1.invite_url = "";
+                        db.SaveChanges();
+                    }
                 }
 
-                //db.League.Append(l1);
-                logger.Trace("Editing league - name: " + l1.league_name);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { l1.league_id, l1.league_name, l1.league_picture, l1.league_rules }, JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.OK, "Victory", JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {

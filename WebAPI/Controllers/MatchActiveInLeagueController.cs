@@ -37,11 +37,11 @@ namespace WebAPI.Controllers
             try
             {
 
-                var m1 = db.Active_in.Where(a => a.league_id == active_In.league_id).Select(x => new { x.match_id, x.league_id, x.user_id, x.wins, x.assists, x.goals_recieved, x.goals_scored, x.match_color, x.pen_missed}).ToList();
+                var m1 = db.Active_in.Where(a => a.league_id == active_In.league_id && a.apporval_status == 0).Select(x => new { x.match_id, x.league_id, x.user_id, x.wins, x.assists, x.goals_recieved, x.goals_scored, x.match_color, x.pen_missed}).ToList();
 
                 if (m1 == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, $"ActiveIn {active_In.match_id} was not found");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, $"ActiveIn in League {active_In.league_id} was not found");
                 }
 
                 List<Player> playersList = new List<Player>();
@@ -54,7 +54,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not edit data for match: " + active_In.match_id + "=======>" + e);
+                logger.Error("Bad Request, could not edit data for match in League: " + active_In.league_id + "=======>" + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }

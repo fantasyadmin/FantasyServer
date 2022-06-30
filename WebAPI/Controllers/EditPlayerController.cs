@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
 
                 if (player == null)
                 {
-                    logger.Error("POST - data was not recieved - Player: " + player);
+                    //logger.Error("POST - data was not recieved - Player: " + player);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Fetching Data - Oops... Something Went Wrong!");
                 }
 
@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                logger.Error("Bad Request, could not edit data for player: " + player.nickname + "=======>" + e);
+                //logger.Error("Bad Request, could not edit data for player: " + player.nickname + "=======>" + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }

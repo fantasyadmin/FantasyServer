@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
 
 
         // POST: api/CreateNewLeague
-        //send user_id, league_name, league_picture, league_rules. return (Ok, Not Found, Bad Request)
+        //send user_id, league_name, league_picture, league_rules, invite_url. return (Ok, Not Found, Bad Request)
         public HttpResponseMessage Post(JObject leagueData)
         {
             logger.Trace("POST - CreateNewLeagueController");
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
                     league_name = league.league_name,
                     league_picture = league.league_picture,
                     league_rules = league.league_rules,
-                    invite_url = "https://cdn.bleacherreport.net/images_root/slides/photos/000/607/604/funny_cat_soccer_problem_original.jpg?1294007705"
+                    invite_url = league.invite_url
                 };
                 //Player p1 = db.Player.Where(p => p.user_id == player.user_id).Where(l => l.Listed_in)
 
@@ -55,7 +55,6 @@ namespace WebAPI.Controllers
                     registration_date = DateTime.Now,
                     league_id = l.league_id,
                     nickname = p1.nickname
-
                 }; //db.Listed_in.Where(r => r.user_id == p1.user_id).FirstOrDefault();
 
 

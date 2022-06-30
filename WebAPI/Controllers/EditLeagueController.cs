@@ -54,7 +54,10 @@ namespace WebAPI.Controllers
                 {
                     l1.league_picture = league.league_picture;
                 }
-
+                if (league.invite_url != "")
+                {
+                    l1.invite_url = league.invite_url;
+                }
                 l1.league_rules = league.league_rules;
 
                 db.SaveChanges();

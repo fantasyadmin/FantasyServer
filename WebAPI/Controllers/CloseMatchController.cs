@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
 
                 if (m2 == null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Match {match.match_id} was not found");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, $"There is no Match in League {match.league_id}");
                 }
 
                 var m3 = m2.FirstOrDefault();
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
             catch (Exception e)
             {
 
-                logger.Error("Bad Request, could not edit data for match: " + match.match_id + "=======>" + e);
+                logger.Error("Bad Request, could not find Match in League {match.league_id" + e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
         }
