@@ -41,18 +41,22 @@ namespace WebAPI.Controllers
                 TimeSpan time = now - today;
                 
 
-                var m1 = db.Match.Where(m => m.league_id == match.league_id && m.match_date <= today && m.match_time <= time).OrderByDescending(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
+                var m2 = db.Match.Where(m => m.league_id == match.league_id && m.match_date <= today).OrderByDescending(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).ToList();
 
-                if (m1 == null)
+                if (m2 == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"Match {match.match_id} was not found");
                 }
+
+                var m3 = m2.FirstOrDefault();
+                
+                var m1 = m2.Where(x => x.match_date == m3.match_date && x.match_time < time).OrderByDescending(a => a.match_time).FirstOrDefault();
 
                 string matchDateStr = m1.match_date.ToString().Substring(0, 10);
                 string color1 = m1.team_color1.Substring(0, m1.team_color1.IndexOf(" "));
                 string color2 = m1.team_color2.Substring(0, m1.team_color2.IndexOf(" "));
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { m1.match_id, m1.league_id, m1.match_time, matchDateStr, m1.lat, m1.lng, color1, color2 }, JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.OK, new { m1.match_id, m1.league_id, m1.match_time, matchDateStr, m1.lat, m1.lng, color1, color2, time }, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception e)
             {

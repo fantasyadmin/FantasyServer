@@ -53,8 +53,10 @@ namespace WebAPI.Controllers
 
                 if (ac1.apporval_status == 0)
                 {
-                    logger.Info($"POST - score is unapproved for player: {p1.user_id} in match: {ac1.match_id}");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Score is unapproved for player: {p1.user_id} in match: {ac1.match_id}");
+                    db.Active_in.Remove(ac1);
+                    db.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, $"Match Results for player {p1.user_id} and the Results form has been Deleted");
                 }
 
                 p1.games_played++;
@@ -80,7 +82,7 @@ namespace WebAPI.Controllers
                 {
                     p1.user_id,
                     p1.nickname,
-                    //ac1.apporval_status,
+                    ac1.apporval_status,
                     p1.games_played,
                     p1.total_assists,
                     p1.total_goals_recieved,

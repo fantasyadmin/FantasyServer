@@ -40,12 +40,16 @@ namespace WebAPI.Controllers
                 DateTime now = DateTime.Now;
                 TimeSpan time = now - today;
 
-                var m1 = db.Match.Where(m => m.league_id == match.league_id && m.match_date >= today).OrderByDescending(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).FirstOrDefault();
+                var m2 = db.Match.Where(m => m.league_id == match.league_id && m.match_date >= today).OrderBy(a => a.match_date).Select(x => new { x.match_id, x.league_id, x.lng, x.lat, x.match_date, x.match_time, x.team_color1, x.team_color2 }).ToList();
 
-                if (m1 == null)
+                if (m2 == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"Match {match.match_id} was not found");
                 }
+
+                var m3 = m2.FirstOrDefault();
+
+                var m1 = m2.Where(x => x.match_date == m3.match_date).OrderBy(a => a.match_time).FirstOrDefault();
 
                 string matchDateStr = m1.match_date.ToString().Substring(0, 10);
 
