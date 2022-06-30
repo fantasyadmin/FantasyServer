@@ -133,6 +133,7 @@ namespace WebAPI.Controllers
                     l1.league_name,
                     l1.league_picture,
                     l1.league_rules,
+                    l1.invite_url,
                     usres_in_league
                 }, JsonMediaTypeFormatter.DefaultMediaType);
             }

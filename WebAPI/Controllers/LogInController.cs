@@ -110,6 +110,7 @@ namespace WebAPI.Controllers
                         l1.league_name,
                         l1.league_picture,
                         l1.league_rules,
+                        l1.invite_url,
                         //Fantasy Team
                         //fs.player1,
                         //fs.player2,
