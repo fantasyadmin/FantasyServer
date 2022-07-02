@@ -177,6 +177,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AddPlayerController.cs" />
+    <Compile Include="Controllers\ChangeManagerController.cs" />
+    <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\ChangeResultsController.cs" />
     <Compile Include="Controllers\CloseMatchController.cs" />
     <Compile Include="Controllers\CreateNewFantasyTeamController.cs" />
