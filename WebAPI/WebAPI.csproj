@@ -180,7 +180,6 @@
     <Compile Include="Controllers\ChangeManagerController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\ChangeResultsController.cs" />
-    <Compile Include="Controllers\CloseMatchController.cs" />
     <Compile Include="Controllers\CreateNewFantasyTeamController.cs" />
     <Compile Include="Controllers\CreateNewLeagueController.cs" />
     <Compile Include="Controllers\DeletePLController.cs" />
@@ -196,6 +195,7 @@
     <Compile Include="Controllers\MatchActiveInLeagueController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
+    <Compile Include="Controllers\NextMatchController.cs" />
     <Compile Include="Controllers\PlayerDiamondController.cs" />
     <Compile Include="Controllers\PlayersInLeagueController.cs" />
     <Compile Include="Controllers\PlayersInTeamController.cs" />
@@ -204,7 +204,6 @@
     <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\SmartCalcController.cs" />
     <Compile Include="Controllers\TeamsInLeagueController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
