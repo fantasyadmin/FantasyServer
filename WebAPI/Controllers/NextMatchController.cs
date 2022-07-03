@@ -73,7 +73,7 @@ namespace WebAPI.Controllers
                 {
                     color1 = m1.team_color1.Substring(0, m1.team_color1.IndexOf(" "));
                 }
-                else if (m1.team_color2.IndexOf(" ") != 0 && m1.team_color1.IndexOf(" ") != -1)
+                if (m1.team_color2.IndexOf(" ") != 0 && m1.team_color2.IndexOf(" ") != -1)
                 {
                     color2 = m1.team_color2.Substring(0, m1.team_color2.IndexOf(" "));
                 }

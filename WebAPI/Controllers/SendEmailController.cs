@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Mail;
+using System.Web;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -43,6 +45,8 @@ namespace WebAPI.Controllers
                 Random random = new Random();
                 int rand = random.Next(1000, 9999);
 
+                string body = File.ReadAllText(HttpContext.Current.Server.MapPath("~/ConfirmationEmail.html"));
+
                 SmtpClient client = new SmtpClient()
                 {
                     Host = "smtp.gmail.com",
@@ -52,6 +56,7 @@ namespace WebAPI.Controllers
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential()
                     {
+
                         UserName = "fantasyleaguehood@gmail.com",
                         Password = "ffxsebwzfcwxkvfh"
                     }
@@ -63,8 +68,12 @@ namespace WebAPI.Controllers
                 {
                     From = fromEmail,
                     Subject = "⚽Fantasy-League צ'כונה⚽ Confirmation Code",
-                    Body = $"Welcome to ⚽Fantasy-League צ'כונה⚽ 🎉\n\nPlease enter the Confirmation Code in the Fantasy-League Hood app to complete your registration and become Top of your League       🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆\n\n\n             Confirmation Code:{rand}\n\n                ┏ヽ( ｀0´)ﾉ ┓　 ○⌒θ┐(｀ﾍ´；)\n",
+                    Body = body 
+                    
+                    //$"Welcome to ⚽Fantasy-League צ'כונה⚽ 🎉\n\nPlease enter the Confirmation Code in the Fantasy-League Hood app to complete your registration and become Top of your League       🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆\n\n\n             Confirmation Code:{rand}\n\n                ┏ヽ( ｀0´)ﾉ ┓　 ○⌒θ┐(｀ﾍ´；)\n",
                 };
+                message.IsBodyHtml = true;
+
                 message.To.Add(toEmail);
                 try
                 {

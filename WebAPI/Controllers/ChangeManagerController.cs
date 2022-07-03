@@ -50,7 +50,6 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-
                 logger.Error($"Bad Request, could not change league manager {player.user_id}.\n{e}");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e);
             }
