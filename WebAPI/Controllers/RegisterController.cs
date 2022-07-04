@@ -10,6 +10,7 @@ using System.Net.Mail;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Formatting;
 using NLog;
+using System.Web.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -59,6 +60,7 @@ namespace WebAPI.Controllers
                     logger.Error("POST - Occupied Value in - user: " + u1);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Email already exist");
                 }
+
 
                 User u = new User() { email = user.email, password = user.password };
 

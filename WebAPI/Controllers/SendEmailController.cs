@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Http;
 using ClassLibrary2;
@@ -68,11 +69,22 @@ namespace WebAPI.Controllers
                 {
                     From = fromEmail,
                     Subject = "⚽Fantasy-League צ'כונה⚽ Confirmation Code",
-                    Body = body 
-                    
+                    Body = body
+
                     //$"Welcome to ⚽Fantasy-League צ'כונה⚽ 🎉\n\nPlease enter the Confirmation Code in the Fantasy-League Hood app to complete your registration and become Top of your League       🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆\n\n\n             Confirmation Code:{rand}\n\n                ┏ヽ( ｀0´)ﾉ ┓　 ○⌒θ┐(｀ﾍ´；)\n",
                 };
                 message.IsBodyHtml = true;
+
+
+                string htmlBody = body;
+                AlternateView avHtml = AlternateView.CreateAlternateViewFromString
+                    (htmlBody, null, MediaTypeNames.Text.Html);
+
+                LinkedResource pic1 = new LinkedResource(@"C:\Users\Gal\Desktop\‏‏FantasyServer - עותק\WebAPI\images\abcde.jpg", MediaTypeNames.Image.Jpeg);
+                pic1.ContentId = "Pic1";
+                avHtml.LinkedResources.Add(pic1);
+                message.AlternateViews.Add(avHtml);
+
 
                 message.To.Add(toEmail);
                 try
