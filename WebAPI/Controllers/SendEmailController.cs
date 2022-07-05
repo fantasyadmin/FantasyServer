@@ -75,14 +75,15 @@ namespace WebAPI.Controllers
                 };
                 message.IsBodyHtml = true;
 
+                body = body.Replace("{rand}", rand.ToString());
+                body = body.Replace("{rand}", rand.ToString());
 
-                string htmlBody = body;
-                AlternateView avHtml = AlternateView.CreateAlternateViewFromString
-                    (htmlBody, null, MediaTypeNames.Text.Html);
 
-                LinkedResource pic1 = new LinkedResource(@"C:\Users\Gal\Desktop\‏‏FantasyServer - עותק\WebAPI\images\abcde.jpg", MediaTypeNames.Image.Jpeg);
-                pic1.ContentId = "Pic1";
-                avHtml.LinkedResources.Add(pic1);
+                AlternateView avHtml = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+
+                //LinkedResource pic1 = new LinkedResource(@"C:\Users\Gal\Desktop\‏‏FantasyServer - עותק\WebAPI\images\abcde.jpg", MediaTypeNames.Image.Jpeg);
+                //pic1.ContentId = "Pic1";
+                //avHtml.LinkedResources.Add(pic1);
                 message.AlternateViews.Add(avHtml);
 
 

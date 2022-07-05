@@ -23,32 +23,7 @@
             width: 100% !important;
             background: #f1f1f1;
         }
-        button {
-            display: inline-block;
-            outline: 0;
-            cursor: pointer;
-            padding: 5px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 20px;
-            vertical-align: middle;
-            border: 1px solid;
-            border-radius: 6px;
-            color: #0366d6;
-            background-color: #fafbfc;
-            border-color: #1b1f2326;
-            box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
-            transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-            transition-property: color, background-color, border-color;
-        }
-        :hover {
-            color: #ffffff;
-            background-color: #0366d6;
-            border-color: #1b1f2326;
-            box-shadow: rgba(27, 31, 35, 0.1) 0px 1px 0px 0px, rgba(255, 255, 255, 0.03) 0px 1px 0px 0px inset;
-            transition-duration: 0.1s;
-        }
-                
+
         /* What it does: Stops email clients resizing small text. */
         * {
             -ms-text-size-adjust: 100%;
@@ -375,7 +350,7 @@
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td class="logo" style="text-align: center;">
-                                    <h1>Welcome To</h1>
+                                    <h1>Your new password</h1>
                                 </td>
                             </tr>
                         </table>
@@ -392,10 +367,9 @@
                             <tr>
                                 <td>
                                     <div class="text" style="padding: 0 2.5em; text-align: center;">
-                                        <h2>Please verify your email</h2>
-                                        <h2 id="confirmCode">{rand}</h2>
-                                        <button onclick="copyEvent({confirmCode})">Copy</button>
-                                        <h3>Enter this Confirmation Code in the Fantasy-League Hood app to complete your registration and become Top of your League</h3>
+                                        <h2>Forgot your password?<br /> No worries!</h2>
+                                        <h2>{rand}</h2>
+                                        <h3>Use this password instead to enter your Fantasy-League Hood account. After loging in, you can change this password in your profile</h3>
                                     </div>
                                 </td>
                             </tr>
@@ -452,14 +426,5 @@
 
         </div>
     </center>
-
-    <script>
-        function copyEvent(id) {
-            var str = document.getElementById(id);
-            window.getSelection().selectAllChildren(str);
-            document.execCommand("copy")
-        }
-    </script>
-
 </body>
 </html>

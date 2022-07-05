@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Web;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -69,6 +72,8 @@ namespace WebAPI.Controllers
 
                 }
 
+                string body = File.ReadAllText(HttpContext.Current.Server.MapPath("~/NewPassswordEmail.html"));
+
                 SmtpClient client = new SmtpClient()
                 {
                     Host = "smtp.gmail.com",
@@ -88,9 +93,20 @@ namespace WebAPI.Controllers
                 MailMessage message = new MailMessage()
                 {
                     From = fromEmail,
-                    Subject = "Your ⚽Fantasy-League צ'כונה⚽ password",
-                    Body = $"Need to choosse new players for your Fantasy Team before next Match and you forgot your password??⛔🥅\n\nNo worries!😎⛱️\n\nUse this password instead to Go and Win the League:\n\n\n       Password:      {newPassword}\n\n                ┏ヽ( ｀0´)ﾉ ┓　 ○⌒θ┐(｀ﾍ´；)\n",
+                    Subject = "⚽Fantasy-League צ'כונה⚽ new password",
+                    Body = body
+
+                    //$"Need to choosse new players for your Fantasy Team before next Match and you forgot your password??⛔🥅\n\nNo worries!😎⛱️\n\nUse this password instead to Go and Win the League:\n\n\n       Password:      {newPassword}\n\n                ┏ヽ( ｀0´)ﾉ ┓　 ○⌒θ┐(｀ﾍ´；)\n",
                 };
+
+                message.IsBodyHtml = true;
+
+                body = body.Replace("{rand}", newPassword.ToString());
+
+                AlternateView avHtml = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+
+                message.AlternateViews.Add(avHtml);
+
                 message.To.Add(toEmail);
                 try
                 {
