@@ -48,11 +48,32 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"There was no Match in League {match.league_id} that is still active");
                 }
 
-                var m3 = m2.FirstOrDefault();
+                //var m3 = m2.FirstOrDefault();
                 
-                var m1 = m2.Where(x => x.match_date == m3.match_date && x.match_time < time).OrderByDescending(a => a.match_time).FirstOrDefault();
+                //var m4 = m2.Where(x => x.match_date <= m3.match_date).OrderByDescending(a => a.match_date).ToList();
 
-                string matchDateStr = m1.match_date.ToString().Substring(0, 10);
+                var m3 = m2.FirstOrDefault();
+
+                var m1 = m3;
+
+                if (m3.match_date == today)
+                {
+                    var m4 = m2.Where(x => x.match_date == m3.match_date && x.match_time < time).OrderByDescending(a => a.match_time).ToList();
+                    m1 = m4.FirstOrDefault();
+                }
+                if (m1 == null || m3.match_date != today)
+                {
+                    var m4 = m2.Where(x => x.match_date < today).OrderByDescending(a => a.match_date).ToList();
+                    m3 = m4.FirstOrDefault();
+                    m1 = m4.Where(b => b.match_date == m3.match_date).OrderByDescending(a => a.match_time).FirstOrDefault();
+                }
+
+
+                string day = m1.match_date.Day.ToString();
+                string month = m1.match_date.Month.ToString();
+                string year = m1.match_date.Year.ToString();
+
+                string matchDateStr = day + "/" + month + "/" + year;
                 string color1 = m1.team_color1.Substring(0, m1.team_color1.IndexOf(" "));
                 string color2 = m1.team_color2.Substring(0, m1.team_color2.IndexOf(" "));
 

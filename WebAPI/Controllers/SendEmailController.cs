@@ -13,6 +13,8 @@ using ClassLibrary2;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace WebAPI.Controllers
 {
@@ -76,8 +78,6 @@ namespace WebAPI.Controllers
                 message.IsBodyHtml = true;
 
                 body = body.Replace("{rand}", rand.ToString());
-                body = body.Replace("{rand}", rand.ToString());
-
 
                 AlternateView avHtml = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
 

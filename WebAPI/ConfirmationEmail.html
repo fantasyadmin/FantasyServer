@@ -41,7 +41,7 @@
             transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
             transition-property: color, background-color, border-color;
         }
-        :hover {
+         :hover {
             color: #ffffff;
             background-color: #0366d6;
             border-color: #1b1f2326;
@@ -393,8 +393,7 @@
                                 <td>
                                     <div class="text" style="padding: 0 2.5em; text-align: center;">
                                         <h2>Please verify your email</h2>
-                                        <h2 id="confirmCode">{rand}</h2>
-                                        <button onclick="copyEvent({confirmCode})">Copy</button>
+                                        <h2>{rand}</h2>
                                         <h3>Enter this Confirmation Code in the Fantasy-League Hood app to complete your registration and become Top of your League</h3>
                                     </div>
                                 </td>
@@ -452,14 +451,6 @@
 
         </div>
     </center>
-
-    <script>
-        function copyEvent(id) {
-            var str = document.getElementById(id);
-            window.getSelection().selectAllChildren(str);
-            document.execCommand("copy")
-        }
-    </script>
 
 </body>
 </html>

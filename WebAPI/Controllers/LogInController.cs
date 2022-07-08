@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -29,9 +31,14 @@ namespace WebAPI.Controllers
             try
             {
                 //find the user
-                User u1 = db.User.Where(u => u.email == user.email).FirstOrDefault();
+                var sha = SHA256.Create();
+                var asBytes = Encoding.Default.GetBytes(user.password);
+                var hashed = sha.ComputeHash(asBytes);
+                string password = Convert.ToBase64String(hashed);
 
-                if (u1.email != null && u1.password != null && u1.password == user.password)
+                User u1 = db.User.Where(u => u.email == user.email && u.password == password).FirstOrDefault();
+
+                if (u1.email != null && u1.password != null)
                 {
                     logger.Trace("POST - DB connection by - " + user.email + " returned - " + u1.email);
 
@@ -59,7 +66,7 @@ namespace WebAPI.Controllers
                     Player player4 = db.Player.Where(p => p.user_id == fs.player4).FirstOrDefault();
 
 
-                    var usres_in_league = db.Listed_in.Join(db.Fantasy_team, f => f.user_id, p => p.user_id, (f, p) => new { Listed_in = f, Fantasy_team = p }).Where(fp => fp.Listed_in.league_id == l1.league_id).GroupBy(g => g.Fantasy_team.user_id).Select(x => new { x.FirstOrDefault().Listed_in.user_id, x.FirstOrDefault().Listed_in.nickname, x.FirstOrDefault().Listed_in.Player.player_score, x.FirstOrDefault().Listed_in.Player.picture, x.FirstOrDefault().Fantasy_team.team_id, x.FirstOrDefault().Fantasy_team.team_points }).ToList();
+                    var usres_in_league = db.Listed_in.Join(db.Fantasy_team, f => f.user_id, p => p.user_id, (f, p) => new { Listed_in = f, Fantasy_team = p }).Where(fp => fp.Listed_in.league_id == l1.league_id).GroupBy(g => g.Fantasy_team.user_id).Select(x => new { x.FirstOrDefault().Listed_in.user_id, x.FirstOrDefault().Listed_in.nickname, x.FirstOrDefault().Listed_in.Player.player_score, x.FirstOrDefault().Listed_in.Player.picture, x.FirstOrDefault().Listed_in.Player.total_assists, x.FirstOrDefault().Listed_in.Player.total_goals_recieved, x.FirstOrDefault().Listed_in.Player.total_goals_scored, x.FirstOrDefault().Listed_in.Player.total_pen_missed, x.FirstOrDefault().Listed_in.Player.total_wins, x.FirstOrDefault().Listed_in.Player.games_played, x.FirstOrDefault().Listed_in.Player.league_manager, x.FirstOrDefault().Fantasy_team.team_id, x.FirstOrDefault().Fantasy_team.team_points }).ToList();
 
                     //var abcd = db.Listed_in.Join(db.Fantasy_team, f => f.user_id, p => p.user_id, (f, p) => new { Listed_in = f, Fantasy_team = p }).Where(fp => fp.Listed_in.league_id == l1.league_id).Select(x => new { x.Listed_in.user_id, x.Listed_in.nickname, x.Listed_in.Player.player_score, x.Listed_in.Player.picture, x.Fantasy_team.team_id, x.Fantasy_team.team_points }).Distinct().ToList();
 
@@ -102,6 +109,7 @@ namespace WebAPI.Controllers
                         p1.total_goals_scored,
                         p1.total_pen_missed,
                         p1.total_wins,
+                        p1.games_played,
                         //listed in
                         //listing,
                         usres_in_league,

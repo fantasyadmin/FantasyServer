@@ -100,7 +100,14 @@ namespace WebAPI.Controllers
                 db.Match.Add(m1);
                 db.SaveChanges();
 
-                string matchDateStr = m1.match_date.ToString().Substring(0, 10);
+
+                //int length = m1.match_date.ToString().Length;
+
+                string day = m1.match_date.Day.ToString();
+                string month = m1.match_date.Month.ToString();
+                string year = m1.match_date.Year.ToString();
+
+                string matchDateStr = day + "/" + month + "/" + year;
 
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
@@ -161,8 +168,6 @@ namespace WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.InnerException);
             }
         }
-
-
         //}
 
         // DELETE: api/Match/5

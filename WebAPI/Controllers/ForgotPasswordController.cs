@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using ClassLibrary2;
@@ -42,6 +44,7 @@ namespace WebAPI.Controllers
 
             try
             {
+
                 User u1 = db.User.Where(u => u.email == user.email).FirstOrDefault();
 
                 if (u1 == null)
@@ -71,6 +74,11 @@ namespace WebAPI.Controllers
                     }
 
                 }
+
+                var sha = SHA256.Create();
+                var asBytes = Encoding.Default.GetBytes(newPassword);
+                var hashed = sha.ComputeHash(asBytes);
+                string password = Convert.ToBase64String(hashed); 
 
                 string body = File.ReadAllText(HttpContext.Current.Server.MapPath("~/NewPassswordEmail.html"));
 
@@ -112,7 +120,7 @@ namespace WebAPI.Controllers
                 {
                     client.Send(message);
 
-                    u1.password = newPassword;
+                    u1.password = password;
                     db.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.OK);

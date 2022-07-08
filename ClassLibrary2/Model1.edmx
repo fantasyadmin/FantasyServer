@@ -127,7 +127,7 @@
           </Key>
           <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_Active_in_Match1">
           <End Role="Match" Type="Self.Match" Multiplicity="1" />
@@ -404,7 +404,7 @@
           </Key>
           <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Active_in" Relationship="Self.FK_Active_in_User" FromRole="User" ToRole="Active_in" />
           <NavigationProperty Name="Fantasy_team" Relationship="Self.FK_Fantasy_team_User" FromRole="User" ToRole="Fantasy_team" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Player_User" FromRole="User" ToRole="Player" />

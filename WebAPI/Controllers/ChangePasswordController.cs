@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using ClassLibrary2;
 using Newtonsoft.Json;
@@ -43,7 +45,12 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"User {user.user_id}, was not found");
                 }
 
-                u1.password = user.password;
+                var sha = SHA256.Create();
+                var asBytes = Encoding.Default.GetBytes(user.password);
+                var hashed = sha.ComputeHash(asBytes);
+                string password = Convert.ToBase64String(hashed);
+
+                u1.password = password;
                 db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);

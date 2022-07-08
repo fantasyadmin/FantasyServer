@@ -11,6 +11,8 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http.Formatting;
 using NLog;
 using System.Web.Helpers;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace WebAPI.Controllers
 {
@@ -61,8 +63,13 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Email already exist");
                 }
 
+                //find the user
+                var sha = SHA256.Create();
+                var asBytes = Encoding.Default.GetBytes(user.password);
+                var hashed = sha.ComputeHash(asBytes);
+                string password = Convert.ToBase64String(hashed);
 
-                User u = new User() { email = user.email, password = user.password };
+                User u = new User() { email = user.email, password = password };
 
                 db.User.Add(u);
                 logger.Trace("User added to DB" + u.email);
